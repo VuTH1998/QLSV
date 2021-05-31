@@ -19,7 +19,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_nv, ten_nv FROM nhanvien ORDER BY id DESC";
+  $showData = "SELECT id, ma_sv, ten_sv FROM sinhvien ORDER BY id DESC";
   $result = mysqli_query($conn, $showData);
   $nvhow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -27,7 +27,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // hien thi nhan vien trong nhom
-  $nv = "SELECT ctn.id as id, ma_nv, hinh_anh, ten_nv, gioi_tinh, ngay_sinh, ten_chuc_vu, ten_phong_ban, ctn.ngay_tao as ngay_tao, trang_thai FROM chi_tiet_nhom ctn, nhanvien nv, chuc_vu cv, phong_ban pb WHERE ctn.nhan_vien_id = nv.id AND nv.chuc_vu_id = cv.id AND nv.phong_ban_id = pb.id AND ma_nhom = '$id'";
+  $nv = "SELECT ctn.id as id, ma_sv, hinh_anh, ten_sv, gioi_tinh, ngay_sinh, ten_chuc_vu, ten_khoa, ctn.ngay_tao as ngay_tao, trang_thai FROM chi_tiet_nhom ctn, sinhvien nv, chuc_vu cv, khoa pb WHERE ctn.sinh_vien_id = nv.id AND nv.chuc_vu_id = cv.id AND nv.khoa_id = pb.id AND ma_nhom = '$id'";
   $resultNV = mysqli_query($conn, $nv);
   $arrNV = array();
   while($rowNV = mysqli_fetch_array($resultNV)) 
@@ -85,21 +85,21 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 
     // validate
     if($nhanVien == 'chon')
-      $error['nhanVien'] = 'Vui lòng <b> chọn nhân viên </b>';
+      $error['nhanVien'] = 'Vui lòng <b> chọn Sinh viên </b>';
     // kiem tra nhan vien da ton tai
-    $kt = "SELECT nhan_vien_id FROM chi_tiet_nhom WHERE nhan_vien_id = '$nhanVien' AND ma_nhom = '$id'";
+    $kt = "SELECT sinh_vien_id FROM chi_tiet_nhom WHERE sinh_vien_id = '$nhanVien' AND ma_nhom = '$id'";
     $resultKT = mysqli_query($conn, $kt);
     if(mysqli_num_rows($resultKT) != 0)
-      $error['tonTai'] = 'Nhân viên này <b> đã tồn tại </b> trong nhóm';
+      $error['tonTai'] = 'Sinh viên này <b> đã tồn tại </b> trong nhóm';
 
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO chi_tiet_nhom(ma_nhom, nhan_vien_id, nguoi_tao, ngay_tao) VALUES('$id', '$nhanVien', '$nguoiTao', '$ngayTao')";
+      $insert = "INSERT INTO chi_tiet_nhom(ma_nhom, sinh_vien_id, nguoi_tao, ngay_tao) VALUES('$id', '$nhanVien', '$nguoiTao', '$ngayTao')";
       $result = mysqli_query($conn, $insert);
       if($result)
       {
-        $success['success'] = 'Thêm nhân viên vào nhóm thành công';
+        $success['success'] = 'Thêm Sinh viên vào nhóm thành công';
         echo '<script>setTimeout("window.location=\'chi-tiet-nhom.php?p=group&a=list-group&id='.$id.'&add\'",1000);</script>';
       }
     }
@@ -113,7 +113,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $maNhom = $_POST['maNhom'];
     $delete = "DELETE FROM chi_tiet_nhom WHERE id = $maNhom";
     mysqli_query($conn, $delete);
-    $success['success'] = 'Đã xóa nhân viên ra khỏi nhóm thành công.';
+    $success['success'] = 'Đã xóa Sinh viên ra khỏi nhóm thành công.';
     echo '<script>setTimeout("window.location=\'chi-tiet-nhom.php?p=group&a=list-group&id='.$id.'\'",1000);</script>';
   }
 
@@ -131,7 +131,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           </div>
           <div class="modal-body">
             <input type="hidden" name="maNhom">
-            Bạn có thực sự muốn xóa nhân viên này ra khỏi nhóm?
+            Bạn có thực sự muốn xóa Sinh viên này ra khỏi nhóm?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
@@ -150,7 +150,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Quản lý nhóm
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="danh-sach-nhom.php?p=group&a=list-group">Danh sách nhóm</a></li>
         <li class="active">Quản lý nhóm</li>
       </ol>
@@ -169,7 +169,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                 <i class="fa fa-edit"></i> Chỉnh sửa nhóm
               </a>
               <a href="chi-tiet-nhom.php?p=group&a=list-group&id=<?php echo $id; ?>&add" class="btn btn-app">
-                <i class="fa fa-plus"></i> Thêm nhân viên
+                <i class="fa fa-plus"></i> Thêm Sinh viên
               </a>
               <a  href="chi-tiet-nhom.php?p=group&a=list-group&id=<?php echo $id; ?>" class="btn btn-app">
                 <i class="fa fa-close"></i> Hủy bỏ
@@ -281,7 +281,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           ?>
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Thêm nhân viên vào nhóm</h3>
+              <h3 class="box-title">Thêm Sinh viên vào nhóm</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -341,13 +341,13 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <input type="text" class="form-control" id="exampleInputEmail1" name="maNhom" value="<?php echo $id; ?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Chọn nhân viên: </label>
+                      <label for="exampleInputEmail1">Chọn Sinh viên: </label>
                       <select class="form-control" name="nhanVien">
-                      <option value="chon">--- Chọn nhân viên ---</option>
+                      <option value="chon">--- Chọn Sinh viên ---</option>
                       <?php
                         foreach ($nvhow as $nv) 
                         {
-                          echo "<option value='".$nv['id']."'>".$nv['ma_nv']." - ".$nv['ten_nv']."</option>";
+                          echo "<option value='".$nv['id']."'>".$nv['ma_sv']." - ".$nv['ten_sv']."</option>";
                         }
                       ?>
                       </select>
@@ -363,7 +363,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <!-- /.form-group -->
                     <?php 
                       if($_SESSION['level'] == 1)
-                        echo "<button type='submit' class='btn btn-primary' name='luuNhanVien'><i class='fa fa-plus'></i> Thêm nhân viên</button>";
+                        echo "<button type='submit' class='btn btn-primary' name='luuNhanVien'><i class='fa fa-plus'></i> Thêm Sinh viên</button>";
                     ?>
                   </div>
                   <!-- /.col -->
@@ -379,7 +379,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           <!-- /.box -->
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Nhân viên trong nhóm</h3>
+              <h3 class="box-title">Sinh viên trong nhóm</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -432,9 +432,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Mã nhân viên</th>
+                    <th>Mã Sinh viên</th>
                     <th>Ảnh</th>
-                    <th>Tên nhân viên</th>
+                    <th>Tên Sinh viên</th>
                     <th>Giới tính</th>
                     <th>Năm sinh</th>
                     <th>Chức vụ</th>
@@ -452,9 +452,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $nv['ma_nv']; ?></td>
+                        <td><?php echo $nv['ma_sv']; ?></td>
                         <td><img src="../uploads/staffs/<?php echo $nv['hinh_anh']; ?>" width="80"></td>
-                        <td><?php echo $nv['ten_nv']; ?></td>
+                        <td><?php echo $nv['ten_sv']; ?></td>
                         <td>
                         <?php
                           if($nv['gioi_tinh'] == 1)
@@ -474,7 +474,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                         ?>
                         </td>
                         <td><?php echo $nv['ten_chuc_vu']; ?></td>
-                        <td><?php echo $nv['ten_phong_ban']; ?></td>
+                        <td><?php echo $nv['ten_khoa']; ?></td>
                         <td>
                         <?php 
                           $ngayThem = date_create($nv['ngay_tao']);
@@ -485,11 +485,15 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                         <?php 
                           if($nv['trang_thai'] == 1)
                           {
-                            echo '<span class="badge bg-blue"> Đang làm việc </span>';
+                            echo '<span class="badge bg-blue"> Đang học </span>';
+                          }
+                          else if($arrS['trang_thai'] == 2)
+                          {
+                            echo '<span class="badge bg-blue"> Đã tốt nghiệp </span>';
                           }
                           else
                           {
-                            echo '<span class="badge bg-red"> Đã nghỉ việc </span>';
+                            echo '<span class="badge bg-red"> Đã nghỉ học </span>';
                           }
                         ?>
                         </td>

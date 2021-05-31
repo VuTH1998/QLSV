@@ -66,7 +66,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Đổi mật khẩu
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="thong-tin-tai-khoan.php?p=account&a=profile">Tài khoản</a></li>
         <li class="active">Đổi mật khẩu</li>
       </ol>

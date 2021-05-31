@@ -17,7 +17,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_bang_cap, ten_bang_cap, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM bang_cap ORDER BY ngay_tao DESC";
+  $showData = "SELECT id, ma_tot_nghiep, ten_noi_tot_nghiep, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM noi_tot_nghiep ORDER BY ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO bang_cap(ma_bang_cap, ten_bang_cap, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$certificateCode','$certificateName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
+      $insert = "INSERT INTO noi_tot_nghiep(ma_tot_nghiep, ten_noi_tot_nghiep, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$certificateCode','$certificateName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
       $result = mysqli_query($conn, $insert);
       if($result)
       {
@@ -66,7 +66,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idCertificate'];
-    $delete = "DELETE FROM bang_cap WHERE id = $id";
+    $delete = "DELETE FROM noi_tot_nghiep WHERE id = $id";
     mysqli_query($conn, $delete);
     $success['success'] = 'Xóa trường tốt nghiệp thành công.';
     echo '<script>setTimeout("window.location=\'noi-tot-nghiep.php?p=staff&a=certificate\'",1000);</script>';
@@ -105,7 +105,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Trường tốt nghiệp
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="noi-tot-nghiep.php?p=staff&a=certificate">Trường tốt nghiệp</a></li>
         <li class="active">Thêm trường tốt nghiệp</li>
       </ol>
@@ -237,8 +237,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_bang_cap']; ?></td>
-                        <td><?php echo $arrS['ten_bang_cap']; ?></td>
+                        <td><?php echo $arrS['ma_tot_nghiep']; ?></td>
+                        <td><?php echo $arrS['ten_noi_tot_nghiep']; ?></td>
                         <td><?php echo $arrS['ghi_chu']; ?></td>
                         <td><?php echo $arrS['nguoi_tao']; ?></td>
                         <td><?php echo $arrS['ngay_tao']; ?></td>

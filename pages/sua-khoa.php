@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $showData = "SELECT id, ma_phong_ban, ten_phong_ban, ghi_chu, nguoi_sua, ngay_sua FROM phong_ban WHERE id = $id";
+    $showData = "SELECT id, ma_khoa, ten_khoa, ghi_chu, nguoi_sua, ngay_sua FROM khoa WHERE id = $id";
     $result = mysqli_query($conn, $showData);
     $row = mysqli_fetch_array($result);
     $personEdit = $row_acc['ho'] . " " . $row_acc['ten'];
@@ -35,13 +35,13 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 
     // validate
     if(empty($roomName))
-      $error['roomName'] = 'Vui lòng nhập <b> tên phòng ban </b>';
+      $error['roomName'] = 'Vui lòng nhập <b> tên khoa </b>';
 
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE phong_ban SET
-                  ten_phong_ban = '$roomName',
+      $update = " UPDATE khoa SET
+                  ten_khoa = '$roomName',
                   ghi_chu = '$description',
                   nguoi_sua = '$personEdit',
                   ngay_sua = '$dateEdit'
@@ -60,12 +60,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Phòng ban
+        Khoa
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
-        <li><a href="khoa.php?p=staff&a=room">Phòng ban</a></li>
-        <li class="active">Chỉnh sửa phòng ban</li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="khoa.php?p=staff&a=room">Khoa</a></li>
+        <li class="active">Chỉnh sửa khoa</li>
       </ol>
     </section>
 
@@ -75,7 +75,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Chỉnh sửa phòng ban</h3>
+              <h3 class="box-title">Chỉnh sửa khoa</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -120,12 +120,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Mã phòng ban: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="roomCode" value="<?php echo $row['ma_phong_ban']; ?>" readonly>
+                      <label for="exampleInputEmail1">Mã khoa: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="roomCode" value="<?php echo $row['ma_khoa']; ?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Tên phòng ban: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên phòng ban" value="<?php echo $row['ten_phong_ban']; ?>" name="roomName">
+                      <label for="exampleInputEmail1">Tên khoa: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên khoa" value="<?php echo $row['ten_khoa']; ?>" name="roomName">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>

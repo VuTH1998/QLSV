@@ -11,7 +11,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   include('../layouts/sidebar.php');
 
   // show data
-  $showData = "SELECT id, ma_nv, ma_sinhvien, hinh_anh, ten_nv, gioi_tinh, ngay_tao, ngay_sinh, noi_sinh, so_cmnd, trang_thai FROM nhanvien ORDER BY id DESC";
+  $showData = "SELECT id, ma_sv, ma_sinhvien, hinh_anh, ten_sv, gioi_tinh, ngay_tao, ngay_sinh, noi_sinh, so_cmnd, trang_thai FROM sinhvien ORDER BY id DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="danh-sach-nhan-vien.php?p=staff&a=list-staff">Sinh viên</a></li>
         <li class="active">Danh sách sinh viên</li>
       </ol>
@@ -94,6 +94,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   }
                 }
               ?>
+              
               <?php 
                 // show success
                 if(isset($success)) 
@@ -134,10 +135,10 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_nv']; ?></td>
+                        <td><?php echo $arrS['ma_sv']; ?></td>
                         <td><?php echo $arrS['ma_sinhvien']; ?></td>
                         <td><img src="../uploads/staffs/<?php echo $arrS['hinh_anh']; ?>" width="80"></td>
-                        <td><?php echo $arrS['ten_nv']; ?></td>
+                        <td><?php echo $arrS['ten_sv']; ?></td>
                         <td>
                         <?php
                           if($arrS['gioi_tinh'] == 1)

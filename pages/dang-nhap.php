@@ -61,7 +61,7 @@ else
           mysqli_query($conn, $update); 
 
 					$success['mess'] = 'Đăng nhập thành công';
-					header("Refresh: 1; index.php?p=index&a=statistic");
+					header("Refresh: 1; index.php");
 				}
 				else
 				{

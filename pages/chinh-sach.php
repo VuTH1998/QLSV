@@ -17,7 +17,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_loai_nv, ten_loai_nv, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM loai_nv ORDER BY ngay_tao DESC";
+  $showData = "SELECT id, ma_chinh_sach, ten_chinh_sach, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM chinh_sach ORDER BY ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO loai_nv(ma_loai_nv, ten_loai_nv, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$typeCode','$typeName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
+      $insert = "INSERT INTO chinh_sach(ma_chinh_sach, ten_chinh_sach, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$typeCode','$typeName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
       $result = mysqli_query($conn, $insert);
       if($result)
       {
@@ -66,7 +66,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idType'];
-    $delete = "DELETE FROM loai_nv WHERE id = $id";
+    $delete = "DELETE FROM chinh_sach WHERE id = $id";
     $result = mysqli_query($conn, $delete);
     if($result)
     {
@@ -108,7 +108,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Chính sách sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="chinh-sach.php?p=staff&a=employee-type">Chính sách sinh viên</a></li>
         <li class="active">Tạo chính sách sinh viên</li>
       </ol>
@@ -240,8 +240,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_loai_nv']; ?></td>
-                        <td><?php echo $arrS['ten_loai_nv']; ?></td>
+                        <td><?php echo $arrS['ma_chinh_sach']; ?></td>
+                        <td><?php echo $arrS['ten_chinh_sach']; ?></td>
                         <td><?php echo $arrS['ghi_chu']; ?></td>
                         <td><?php echo $arrS['nguoi_tao']; ?></td>
                         <td><?php echo $arrS['ngay_tao']; ?></td>

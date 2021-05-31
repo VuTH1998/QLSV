@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   {
     $id = $_GET['id'];
     // show data
-    $showData = "SELECT id, ma_chuyen_mon, ten_chuyen_mon, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM chuyen_mon WHERE id = $id ORDER BY ngay_tao DESC";
+    $showData = "SELECT id, ma_lop, ten_lop, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM lop WHERE id = $id ORDER BY ngay_tao DESC";
     $result = mysqli_query($conn, $showData);
     $arrShow = array();
     $row = mysqli_fetch_array($result);
@@ -42,8 +42,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE chuyen_mon SET 
-                  ten_chuyen_mon = '$titleSpecial',
+      $update = " UPDATE lop SET 
+                  ten_lop = '$titleSpecial',
                   ghi_chu = '$description',
                   nguoi_sua = '$personEdit',
                   ngay_sua = '$dateEdit'
@@ -65,7 +65,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Lớp
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="lop.php?p=staff&a=specialize">Lớp</a></li>
         <li class="active">Chỉnh sửa lớp</li>
       </ol>
@@ -134,11 +134,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mã lớp: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_chuyen_mon']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_lop']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Tên lớp: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên lớp" name="titleSpecial" value="<?php echo $row['ten_chuyen_mon']; ?>">
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên lớp" name="titleSpecial" value="<?php echo $row['ten_lop']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>

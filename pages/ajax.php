@@ -9,7 +9,7 @@ require_once('../config.php');
   		$soNgayCong = $_POST['soNgayCong'];
 
   		// lay chuc vu de kiem tra phu cap
-  		$phuCap = "SELECT ma_chuc_vu, ten_chuc_vu FROM nhanvien nv, chuc_vu cv WHERE nv.chuc_vu_id = cv.id AND nv.id = $idNhanVien";
+  		$phuCap = "SELECT ma_chuc_vu, ten_chuc_vu FROM sinhvien nv, chuc_vu cv WHERE nv.chuc_vu_id = cv.id AND nv.id = $idNhanVien";
   		$resultPhuCap = mysqli_query($conn, $phuCap);
   		$rowPhuCap = mysqli_fetch_array($resultPhuCap);
   		$maChucVu = $rowPhuCap['ma_chuc_vu'];

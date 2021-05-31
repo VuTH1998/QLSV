@@ -69,7 +69,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Chức vụ
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="chuc-vu.php?p=staff&a=position">Chức vụ</a></li>
         <li class="active">Chỉnh sửa chức vụ</li>
       </ol>

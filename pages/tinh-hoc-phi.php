@@ -15,7 +15,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   $salaryCode = "ML" . time();
 
   // show data
-  $nv = "SELECT id, ma_nv, ten_nv FROM nhanvien WHERE trang_thai <> 0";
+  $nv = "SELECT id, ma_sinhvien, ho_sv, ten_sv FROM sinhvien WHERE trang_thai <> 0";
   $resultNV = mysqli_query($conn, $nv);
   $arrNV = array();
   while($rowNV = mysqli_fetch_array($resultNV)){
@@ -37,7 +37,6 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     // lay gia tri tren form
     $maNhanVien = $_POST['maNhanVien'];
     $soNgayCong = $_POST['soNgayCong'];
-    $phuCap = $_POST['phuCap'];
     $tamUng = $_POST['tamUng'];
     $moTa = $_POST['moTa'];
     $ngayTinhLuong = $_POST['ngayTinhLuong'];
@@ -49,15 +48,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $error['soNgayCong'] = 'error';
     if($maNhanVien == 'chon')
       $error['maNhanVien'] = 'error';
-    if($phuCap == "")
-      $error['phuCap'] = 'error';
     if(!empty($soNgayCong) && !is_numeric($soNgayCong))
       $error['kiemTraKieuSo'] = 'error';
-    if(!empty($phuCap) && !is_numeric($phuCap))
-      $error['phuCapSo'] = 'error';
+   
 
     // lay luong ngay cua nhan vien theo chuc vu
-    $luongNgay = "SELECT luong_ngay FROM nhanvien nv, chuc_vu cv WHERE nv.chuc_vu_id = cv.id AND nv.id = $maNhanVien";
+    $luongNgay = "SELECT luong_ngay FROM sinhvien nv, chuc_vu cv WHERE nv.chuc_vu_id = cv.id AND nv.id = $maNhanVien";
     $resultLuongNgay = mysqli_query($conn, $luongNgay);
     $rowLuongNgay = mysqli_fetch_array($resultLuongNgay);
     $getLuongNgay = $rowLuongNgay['luong_ngay'];
@@ -76,18 +72,6 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $luongThang = (25 + ($soNgayCong - 25)*2) * $getLuongNgay;
     }
 
-    // tinh cac khoan phai nop lai
-    // bao hiem xa hoi: 8%
-    $baoHiemXaHoi = $luongThang * 0;
-    // (8/100)
-    // bao hiem y te : 1,5%
-    $baoHiemYTe = $luongThang * 0 ;
-    // (1.5/100)
-    // bao hiem that nghiep
-    $baoHiemThatNghiep = $luongThang * 0;
-    // (1/100)
-    // tinh tong cac khoan tru
-    $tongKhoanTru = $baoHiemXaHoi + $baoHiemYTe + $baoHiemThatNghiep;
 
     // tam ung
     if(($luongThang) < $tamUng)
@@ -97,15 +81,14 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     }
 
     // tinh thuc lanh
-    $thucLanh = $luongThang + $phuCap - $tongKhoanTru - $tamUng;
+    $thucLanh = $luongThang - $tamUng;
 
 
     if(!$error)
     {
       // them vao db
-      $insert = "INSERT INTO luong(ma_luong, nhanvien_id, luong_thang, ngay_cong, phu_cap, khoan_nop, tam_ung, thuc_lanh, ngay_cham, ghi_chu, nguoi_tao_id, ngay_tao, nguoi_sua_id, ngay_sua) VALUES('$salaryCode', $maNhanVien, $luongThang, $soNgayCong, $phuCap, $tongKhoanTru, $tamUng, $thucLanh, '$ngayTinhLuong', '$moTa', $user_id, '$ngayTao', $user_id, '$ngayTao')";
+      $insert = "INSERT INTO hoc_phi(ma_hoc_phi, sinhvien_id, hoc_phi_ky, so_tin_chi, da_nop, con_no, ngay_dong, ghi_chu, nguoi_tao_id, ngay_tao, nguoi_sua_id, ngay_sua) VALUES('$salaryCode', $maNhanVien, $luongThang, $soNgayCong, $tamUng, $thucLanh, '$ngayTinhLuong', '$moTa', $user_id, '$ngayTao', $user_id, '$ngayTao')";
       $result = mysqli_query($conn, $insert);
-
       if($result)
       {
         $showMess = true;
@@ -129,9 +112,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Tính học phí
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="tinh-hoc-phi.php?p=salary&a=salary">Tính học phí</a></li>
-        <li class="active">Tính học phí viên</li>
+        <li class="active">Tính học phí sinh viên</li>
       </ol>
     </section>
 
@@ -207,7 +190,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                         <?php 
                           foreach ($arrNV as $nv)
                           {
-                            echo "<option value='".$nv['id']."'>" .$nv['ma_nv']. " - " .$nv['ten_nv']."</option>";
+                            echo "<option value='".$nv['id']."'>" .$nv['ma_sinhvien']. " - ".$nv['ho_sv']. " - " .$nv['ten_sv']."</option>";
                           } 
                         ?>
                       </select>
@@ -218,19 +201,6 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <input type="text" class="form-control" placeholder="Nhập số tín chỉ" name="soNgayCong" value="<?php echo isset($_POST['soNgayCong']) ? $_POST['soNgayCong'] : ''; ?>" id="soNgayCong">
                       <small style="color: red;"><?php if(isset($error['soNgayCong'])){ echo 'Số tín chỉ không được để trống'; } ?></small>
                       <small style="color: red;"><?php if(isset($error['kiemTraKieuSo'])){ echo 'Vui lòng nhập số'; } ?></small>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Phụ cấp (Phụ cấp chính sách, học bổng....): </label>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <input type="text" class="form-control" placeholder="Chọn 'tính phụ cấp' để biết số tiền phụ cấp" name="phuCap" id="phuCap">
-                        </div>
-                        <div class="col-md-8">
-                          <button type="button" class="btn btn-primary btn-flat" id="tinhPhuCap"><i class="fa fa-calculator"></i> Tính phụ cấp</button>
-                        </div>
-                      </div>
-                      <small style="color: red;"><?php if(isset($error['phuCap'])){ echo 'Vui lòng chọn tính phụ cấp'; } ?></small>
-                      <small style="color: red;"><?php if(isset($error['phuCapSo'])){ echo 'Vui lòng nhập số'; } ?></small>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Đã đóng </label>

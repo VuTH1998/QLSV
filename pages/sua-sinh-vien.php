@@ -14,7 +14,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $showData = "SELECT nv.id as id, quoc_tich_id, ton_giao_id, dan_toc_id, loai_nv_id, bang_cap_id, phong_ban_id, chuc_vu_id, trinh_do_id, chuyen_mon_id, hon_nhan_id, ma_nv, hinh_anh, ten_nv, ma_sinhvien, biet_danh, gioi_tinh, nv.ngay_tao as ngay_tao, ngay_sinh, noi_sinh, so_cmnd, ngay_cap_cmnd, noi_cap_cmnd, nguyen_quan, ten_quoc_tich, ten_dan_toc, ten_ton_giao, ho_khau, tam_tru, ten_loai_nv, ten_trinh_do, ten_chuyen_mon, ten_bang_cap, ten_phong_ban, ten_chuc_vu, ten_tinh_trang, trang_thai FROM nhanvien nv, quoc_tich qt, dan_toc dt, ton_giao tg, loai_nv lnv, trinh_do td, chuyen_mon cm, bang_cap bc, phong_ban pb, chuc_vu cv, tinh_trang_hon_nhan hn WHERE nv.quoc_tich_id = qt.id AND nv.dan_toc_id = dt.id AND nv.ton_giao_id = tg.id AND nv.loai_nv_id = lnv.id AND nv.trinh_do_id = td.id AND nv.chuyen_mon_id = cm.id AND nv.bang_cap_id = bc.id AND nv.phong_ban_id = pb.id AND nv.chuc_vu_id = cv.id AND nv.hon_nhan_id = hn.id AND nv.id = $id";
+    $showData = "SELECT nv.id as id,quoc_tich_id, ton_giao_id, dan_toc_id, chinh_sach_id, noi_tot_nghiep_id, chuc_vu_id, nam_sinh_vien_id, lop_id, khoa_id, hon_nhan_id, xuat_than_id, phuong_thuc_id, ma_sv, hinh_anh, ma_sinhvien,ho_sv, ten_sv, biet_danh, gioi_tinh, nv.ngay_tao as ngay_tao, ngay_sinh, noi_sinh, so_cmnd, ten_tinh_trang, ngay_cap_cmnd, noi_cap_cmnd, ten_phuongthuc, diem_xettuyen, so_dienthoai, email, so_truong, nguyen_quan, ten_quoc_tich, ten_dan_toc, xuat_than, ten_ton_giao, ho_khau, tam_tru, ten_chinh_sach, ten_nam_sinh_vien, ten_lop, ten_noi_tot_nghiep,ngay_vao_doan, ten_khoa, ten_chuc_vu, hoten_bo, nghenghiep_bo, ngaysinh_bo, sdt_bo,  hoten_me, nghenghiep_me, ngaysinh_me, sdt_me, trang_thai FROM sinhvien nv, quoc_tich qt, dan_toc dt, ton_giao tg, chinh_sach lnv, xuatthan xt, phuongthuc_xettuyen pt, nam_sinh_vien td, lop cm, noi_tot_nghiep bc, khoa pb, chuc_vu cv, tinh_trang_hon_nhan hn WHERE nv.quoc_tich_id = qt.id AND nv.dan_toc_id = dt.id AND nv.ton_giao_id = tg.id AND nv.phuong_thuc_id = pt.id AND nv.chinh_sach_id = lnv.id AND nv.xuat_than_id = xt.id AND nv.nam_sinh_vien_id = td.id AND nv.lop_id = cm.id AND nv.noi_tot_nghiep_id = bc.id AND nv.khoa_id = pb.id AND nv.chuc_vu_id = cv.id AND nv.hon_nhan_id = hn.id AND nv.id = $id;";
+    // echo $showData;
+    // die;
     $result = mysqli_query($conn, $showData);
     $row = mysqli_fetch_array($result);
 
@@ -28,26 +30,32 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $dt_id = $row['dan_toc_id'];
     $ten_dt = $row['ten_dan_toc'];
 
-    $nv_id = $row['loai_nv_id'];
-    $ten_nv = $row['ten_loai_nv'];
+    $nv_id = $row['chinh_sach_id'];
+    $ten_nv = $row['ten_chinh_sach'];
 
-    $bc_id = $row['bang_cap_id'];
-    $ten_bc = $row['ten_bang_cap'];
+    $bc_id = $row['noi_tot_nghiep_id'];
+    $ten_bc = $row['ten_noi_tot_nghiep'];
 
-    $pb_id = $row['phong_ban_id'];
-    $ten_pb = $row['ten_phong_ban'];
+    $pb_id = $row['khoa_id'];
+    $ten_pb = $row['ten_khoa'];
 
     $cv_id = $row['chuc_vu_id'];
     $ten_cv = $row['ten_chuc_vu'];
 
-    $td_id = $row['trinh_do_id'];
-    $ten_td = $row['ten_trinh_do'];
+    $td_id = $row['nam_sinh_vien_id'];
+    $ten_td = $row['ten_nam_sinh_vien'];
 
-    $cm_id = $row['chuyen_mon_id'];
-    $ten_cm = $row['ten_chuyen_mon'];
+    $cm_id = $row['lop_id'];
+    $ten_cm = $row['ten_lop'];
 
     $hn_id = $row['hon_nhan_id'];
     $ten_hn = $row['ten_tinh_trang'];
+
+    $xt_id = $row['xuat_than_id'];
+    $ten_xt = $row['xuat_than'];
+
+    $pt_id = $row['phuong_thuc_id'];
+    $ten_pt = $row['ten_phuong_thuc'];
 
 
     // set value option another
@@ -75,7 +83,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $arrDT[] = $rowDT;
     }
 
-    $lnv = "SELECT id, ten_loai_nv FROM loai_nv WHERE id <> $nv_id";
+    $lnv = "SELECT id, ten_chinh_sach FROM chinh_sach WHERE id <> $nv_id";
     $resultLNV = mysqli_query($conn, $lnv);
     $arrLNV = array();
     while ($rowLNV = mysqli_fetch_array($resultLNV)) 
@@ -83,7 +91,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $arrLNV[] = $rowLNV;
     }
 
-    $bc = "SELECT id, ten_bang_cap FROM bang_cap WHERE id <> $bc_id";
+    $bc = "SELECT id, ten_noi_tot_nghiep FROM noi_tot_nghiep WHERE id <> $bc_id";
     $resultBC = mysqli_query($conn, $bc);
     $arrBC = array();
     while ($rowBC = mysqli_fetch_array($resultBC)) 
@@ -91,7 +99,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $arrBC[] = $rowBC;
     }
 
-    $pb = "SELECT id, ten_phong_ban FROM phong_ban WHERE id <> $pb_id";
+    $pb = "SELECT id, ten_khoa FROM khoa WHERE id <> $pb_id";
     $resultPB = mysqli_query($conn, $pb);
     $arrPB = array();
     while ($rowPB = mysqli_fetch_array($resultPB)) 
@@ -107,7 +115,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $arrCV[] = $rowCV;
     }
 
-    $td = "SELECT id, ten_trinh_do FROM trinh_do WHERE id <> $td_id";
+    $td = "SELECT id, ten_nam_sinh_vien FROM nam_sinh_vien WHERE id <> $td_id";
     $resultTD = mysqli_query($conn, $td);
     $arrTD = array();
     while ($rowTD = mysqli_fetch_array($resultTD)) 
@@ -115,12 +123,19 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $arrTD[] = $rowTD;
     }
 
-    $cm = "SELECT id, ten_chuyen_mon FROM chuyen_mon WHERE id <> $cm_id";
+    $cm = "SELECT id, ten_lop FROM lop WHERE id <> $cm_id";
     $resultCM = mysqli_query($conn, $cm);
     $arrCM = array();
     while ($rowCM = mysqli_fetch_array($resultCM)) 
     {
       $arrCM[] = $rowCM;
+    }
+    $xt = "SELECT id, xuat_than FROM xuatthan WHERE id <> $xt_id";
+    $resultXuatThan = mysqli_query($conn, $xt);
+    $arrXuatThan = array();
+    while ($rowXuatThan = mysqli_fetch_array($resultXuatThan)) 
+    {
+      $arrXuatThan[] = $rowXuatThan;
     }
 
     $hn = "SELECT id, ten_tinh_trang FROM tinh_trang_hon_nhan WHERE id <> $hn_id";
@@ -130,7 +145,15 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     {
       $arrHN[] = $rowHN;
     }
+    $pt = "SELECT id, ten_phuongthuc FROM phuongthuc_xettuyen WHERE id <> $pt_id";
+    $resultPT = mysqli_query($conn, $pt);
+    $arrPT = array();
+    while ($rowPT = mysqli_fetch_array($resultPT)) 
+    {
+      $arrPT[] = $rowPT;
+    }
 
+    
   }
 
 
@@ -144,9 +167,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 
     // lay du lieu ve
     $maSinhVien = $_POST['maSinhVien'];
+    $hoSinhVien = $_POST['hoSinhVien'];
     $tenNhanVien = $_POST['tenNhanVien'];
     $bietDanh = $_POST['bietDanh'];
     $honNhan = $_POST['honNhan'];
+    $xuatThan = $_POST['xuatThan'];
     $CMND = $_POST['CMND'];
     $ngayCap = $_POST['ngayCap'];
     $noiCap = $_POST['noiCap'];
@@ -165,6 +190,20 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $phongBan = $_POST['phongBan'];
     $chucVu = $_POST['chucVu'];
     $trinhDo = $_POST['trinhDo'];
+    $ngayVaoDoan=$_POST['ngayVaoDoan'];
+    $phuongThuc=$_POST['phuongThuc'];
+    $soDienThoai=$_POST['soDienThoai'];
+    $Email=$_POST['Email'];
+    $soTruong=$_POST['soTruong'];
+    $diemXetTuyen=$_POST['diemXetTuyen'];
+    $tenBo=$_POST['tenBo'];
+    $ngheBo=$_POST['ngheBo'];
+    $ngaySinhBo=$_POST['ngaySinhBo'];
+    $soBo=$_POST['soBo'];
+    $tenMe=$_POST['tenMe'];
+    $ngheMe=$_POST['ngheMe'];
+    $ngaySinhMe=$_POST['ngaySinhMe'];
+    $soMe=$_POST['soMe'];
     $chuyenMon = $_POST['chuyenMon'];
     $id_user = $row_acc['id'];
     $ngaySua = date("Y-m-d H:i:s");
@@ -178,10 +217,24 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     // validate
     if(empty($maSinhVien))
       $error['maSinhVien'] = 'error';
+      if(empty($tenBo))
+      $error['$tenBo'] = 'error';
+      if(empty($tenMe))
+      $error['$tenMe'] = 'error';
+      if(empty($soBo))
+      $error['$soBo'] = 'error';
+      if(empty($soMe))
+      $error['$soMe'] = 'error';
+      // if(empty($soDienThoai))
+      // $error['soDienThoai'] = 'error';
     if(empty($tenNhanVien))
       $error['tenNhanVien'] = 'error';
+      if(empty($hoSinhVien))
+      $error['hoSinhVien'] = 'error';
     if($honNhan == 'chon')
       $error['honNhan'] = 'error';
+      if($xuatThan == 'chon')
+      $error['xuatThan'] = 'error';
     if(empty($CMND))
       $error['CMND'] = 'error';
     if(empty($noiCap))
@@ -204,7 +257,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $error['chucVu'] = 'error';
     if($trinhDo == 'chon')
       $error['trinhDo'] = 'error';
-
+    if($phuongThuc == 'chon')
+    $error['phuongThuc'] = 'error';
     // validate file
     if($hinhAnh)
     {
@@ -225,14 +279,16 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         $oldImage = $row['hinh_anh'];
 
         // insert data
-        $update = " UPDATE nhanvien SET 
+        $update = " UPDATE sinhvien SET 
                     hinh_anh = '$imageName',
-                    ten_nv = '$tenNhanVien',
+                    ho_sv = '$hoSinhVien',
+                    ten_sv = '$tenNhanVien',
                     biet_danh = '$bietDanh',
                     gioi_tinh = '$gioiTinh',
                     ngay_sinh = '$ngaySinh',
                     noi_sinh = '$noiSinh',
                     hon_nhan_id = '$honNhan',
+                    xuat_than_id = '$xuatThan',
                     so_cmnd = '$CMND',
                     noi_cap_cmnd = '$noiCap',
                     ngay_cap_cmnd = '$ngayCap',
@@ -242,11 +298,17 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     dan_toc_id = '$danToc',
                     ho_khau = '$hoKhau',
                     tam_tru = '$tamTru',
-                    loai_nv_id = '$loaiNhanVien',
-                    trinh_do_id = '$trinhDo',
-                    chuyen_mon_id = '$chuyenMon',
-                    bang_cap_id = '$bangCap',
-                    phong_ban_id = '$phongBan',
+                    chinh_sach_id = '$loaiNhanVien',
+                    nam_sinh_vien_id = '$trinhDo',
+                    lop_id = '$chuyenMon',
+                    noi_tot_nghiep_id = '$bangCap',
+                    ngay_vao_doan = '$ngayVaoDoan',
+                    phuong_thuc_id='$phuongThuc',
+                    diem_xettuyen ='$diemXetTuyen',
+                    so_dienthoai='$soDienThoai',
+                    email='$Email',
+                    so_truong='$soTruong',
+                    khoa_id = '$phongBan',
                     chuc_vu_id = '$chucVu',
                     trang_thai = '$trangThai',
                     nguoi_sua_id = '$id_user',
@@ -254,6 +316,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     ma_sinhvien = '$maSinhVien'
                     WHERE id = $id";
         $result = mysqli_query($conn, $update);
+        // echo $update;
+        // die;
         if($result)
         {
           $showMess = true;
@@ -275,13 +339,15 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       {
         $showMess = true;
         // update data
-        $update = " UPDATE nhanvien SET 
-                    ten_nv = '$tenNhanVien',
+        $update = " UPDATE sinhvien SET 
+                    ho_sv = '$hoSinhVien',
+                    ten_sv = '$tenNhanVien',
                     biet_danh = '$bietDanh',
                     gioi_tinh = '$gioiTinh',
                     ngay_sinh = '$ngaySinh',
                     noi_sinh = '$noiSinh',
                     hon_nhan_id = '$honNhan',
+                    xuat_than_id = '$xuatThan',
                     so_cmnd = '$CMND',
                     noi_cap_cmnd = '$noiCap',
                     ngay_cap_cmnd = '$ngayCap',
@@ -291,11 +357,17 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     dan_toc_id = '$danToc',
                     ho_khau = '$hoKhau',
                     tam_tru = '$tamTru',
-                    loai_nv_id = '$loaiNhanVien',
-                    trinh_do_id = '$trinhDo',
-                    chuyen_mon_id = '$chuyenMon',
-                    bang_cap_id = '$bangCap',
-                    phong_ban_id = '$phongBan',
+                    chinh_sach_id = '$loaiNhanVien',
+                    nam_sinh_vien_id = '$trinhDo',
+                    lop_id = '$chuyenMon',
+                    noi_tot_nghiep_id = '$bangCap',
+                    ngay_vao_doan = '$ngayVaoDoan',
+                    phuong_thuc_id='$phuongThuc',
+                    diem_xettuyen ='$diemXetTuyen',
+                    so_dienthoai='$soDienThoai',
+                    email='$Email',
+                    so_truong='$soTruong',
+                    khoa_id = '$phongBan',
                     chuc_vu_id = '$chucVu',
                     trang_thai = '$trangThai',
                     nguoi_sua_id = '$id_user',
@@ -303,6 +375,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     ma_sinhvien = '$maSinhVien'
                     WHERE id = $id";
         $result = mysqli_query($conn, $update);
+        // echo $update;
+        // die;
         if($result)
         {
           $success['success'] = 'Lưu thông tin thành công';
@@ -320,12 +394,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Chỉnh sửa nhân viên
+        Chỉnh sửa sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
-        <li><a href="danh-sach-sinh-vien.php?p=staff&a=list-staff">Nhân viên</a></li>
-        <li class="active">Chỉnh sửa thông tin nhân viên</li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="danh-sach-sinh-vien.php?p=staff&a=list-staff">Sinh viên</a></li>
+        <li class="active">Chỉnh sửa thông tin sinh viên</li>
       </ol>
     </section>
 
@@ -335,7 +409,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Chỉnh sửa thông tin nhân viên</h3> &emsp;
+              <h3 class="box-title">Chỉnh sửa thông tin sinh viên</h3> &emsp;
               <small>Những ô nhập có dấu <span style="color: red;">*</span> là bắt buộc</small>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -376,7 +450,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Mã số hiệu sinh viên: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $row['ma_nv']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $row['ma_sv']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label>Mã sinh viên <span style="color: red;">*</span>: </label>
@@ -384,16 +458,21 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <small style="color: red;"><?php if(isset($error['maSinhVien'])){ echo "Mã sinh viên không được để trống"; } ?></small>
                     </div>
                     <div class="form-group">
-                      <label>Tên nhân viên <span style="color: red;">*</span>: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên nhân viên" name="tenNhanVien" value="<?php echo $row['ten_nv']; ?>">
-                      <small style="color: red;"><?php if(isset($error['tenNhanVien'])){ echo "Tên nhân viên không được để trống"; } ?></small>
+                      <label>Họ tên đệm sinh viên <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên sinh viên" name="hoSinhVien" value="<?php echo $row['ho_sv']; ?>">
+                      <small style="color: red;"><?php if(isset($error['hoSinhVien'])){ echo "Tên đệm sinh viên không được để trống"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Tên sinh viên <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên sinh viên" name="tenNhanVien" value="<?php echo $row['ten_sv']; ?>">
+                      <small style="color: red;"><?php if(isset($error['tenNhanVien'])){ echo "Tên sinh viên không được để trống"; } ?></small>
                     </div>
                     <div class="form-group">
                       <label>Biệt danh: </label>
                       <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập biệt danh" name="bietDanh" value="<?php echo $row['biet_danh']; ?>">
                     </div>
                     <div class="form-group">
-                      <label>Tình trạng hôn nhân <span style="color: red;">*</span>: </label>
+                      <label>Tình trạng hôn sinh <span style="color: red;">*</span>: </label>
                       <select class="form-control" name="honNhan">
                         <option value="<?php echo $hn_id; ?>"><?php echo $ten_hn; ?></option>
                         <?php 
@@ -403,7 +482,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                           }
                         ?>
                       </select>
-                      <small style="color: red;"><?php if(isset($error['honNhan'])){ echo "Vui lòng chọn tình trạng hôn nhân"; } ?></small>
+                      <small style="color: red;"><?php if(isset($error['honNhan'])){ echo "Vui lòng chọn tình trạng hôn sinh"; } ?></small>
                     </div>
                     <div class="form-group">
                       <label>Số CMND <span style="color: red;">*</span>: </label>
@@ -458,26 +537,98 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <small style="color: red;"><?php if(isset($error['danToc'])){ echo "Vui lòng chọn dân tộc"; } ?></small>
                     </div>
                     <div class="form-group">
-                      <label>Loại nhân viên <span style="color: red;">*</span> : </label>
+                      <label>Diện chính sách <span style="color: red;">*</span> : </label>
                       <select class="form-control" name="loaiNhanVien">
                       <option value="<?php echo $nv_id; ?>"><?php echo $ten_nv; ?></option>
                       <?php 
                         foreach ($arrLNV as $lnv)
                         {
-                          echo "<option value='".$lnv['id']."'>".$lnv['ten_loai_nv']."</option>";
+                          echo "<option value='".$lnv['id']."'>".$lnv['ten_chinh_sach']."</option>";
                         }
                       ?>
                       </select>
-                      <small style="color: red;"><?php if(isset($error['loaiNhanVien'])){ echo "Vui lòng chọn loại nhân viên"; } ?></small>
+                      <small style="color: red;"><?php if(isset($error['loaiNhanVien'])){ echo "Vui lòng chọn diện chính sách"; } ?></small>
                     </div>
                     <div class="form-group">
-                      <label>Bằng cấp: </label>
+                      <label>Nơi tốt nghiệp: </label>
                       <select class="form-control" name="bangCap">
                       <option value="<?php echo $bc_id; ?>"><?php echo $ten_bc; ?></option>
                       <?php 
                         foreach ($arrBC as $bc)
                         {
-                          echo "<option value='".$bc['id']."'>".$bc['ten_bang_cap']."</option>";
+                          echo "<option value='".$bc['id']."'>".$bc['ten_noi_tot_nghiep']."</option>";
+                        }
+                      ?>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Ngày vào đoàn <span style="color: red;">*</span>: </label>
+                      <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Nhập vào đoàn" name="ngayVaoDoan" value="<?php echo $row['ngay_vao_doan']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Phương thức tuyển sinh <span style="color: red;">*</span> : </label>
+                      <select class="form-control" name="phuongThuc">
+                      <option value="<?php echo $pt_id; ?>"><?php echo $ten_pt; ?></option>
+                      <?php 
+                        foreach ($arrPT as $pt)
+                        {
+                          echo "<option value='".$pt['id']."'>".$pt['ten_phuongthuc']."</option>";
+                        }
+                      ?>
+                      </select>
+                      <small style="color: red;"><?php if(isset($error['phuongThuc'])){ echo "Vui lòng chọn phương thức tuyển sinh"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Điểm xét tuyển <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập số điểm" name="diemXetTuyen" value="<?php echo $row['diem_xettuyen']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Khoa <span style="color: red;">*</span>: </label>
+                      <select class="form-control" name="phongBan">
+                      <option value="<?php echo $pb_id; ?>"><?php echo $ten_pb; ?></option>
+                      <?php 
+                        foreach ($arrPB as $pb)
+                        {
+                          echo "<option value='".$pb['id']."'>".$pb['ten_khoa']."</option>";
+                        }
+                      ?>
+                      </select>
+                      <small style="color: red;"><?php if(isset($error['phongBan'])){ echo "Vui lòng chọn khoa"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Chức vụ <span style="color: red;">*</span>: </label>
+                      <select class="form-control" name="chucVu">
+                      <option value="<?php echo $cv_id; ?>"><?php echo $ten_cv; ?></option>
+                      <?php 
+                      foreach ($arrCV as $cv)
+                      {
+                        echo "<option value='".$cv['id']."'>".$cv['ten_chuc_vu']."</option>";
+                      }
+                      ?>
+                      </select>
+                      <small style="color: red;"><?php if(isset($error['chucVu'])){ echo "Vui lòng chọn chức vụ"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Sinh viên năm <span style="color: red;">*</span>: </label>
+                      <select class="form-control" name="trinhDo">
+                      <option value="<?php echo $td_id; ?>"><?php echo $ten_td; ?></option>
+                      <?php 
+                        foreach ($arrTD as $td)
+                        {
+                          echo "<option value='".$td['id']."'>".$td['ten_nam_sinh_vien']."</option>";
+                        }
+                      ?>
+                      </select>
+                      <small style="color: red;"><?php if(isset($error['trinhDo'])){ echo "Vui lòng chọn năm sinh viên"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Lớp: </label>
+                      <select class="form-control" name="chuyenMon">
+                      <option value="<?php echo $cm_id; ?>"><?php echo $ten_cm; ?></option>
+                      <?php 
+                        foreach ($arrCM as $cm)
+                        {
+                          echo "<option value='".$cm['id']."'>".$cm['ten_lop']."</option>";
                         }
                       ?>
                       </select>
@@ -488,13 +639,21 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <?php 
                         if($row['trang_thai'] == 1)
                         {
-                          echo "<option value='1' selected>Đang làm việc</option>";
-                          echo "<option value='0'>Đã nghỉ việc</option>";
+                          echo "<option value='1' selected>Đang học</option>";
+                          echo "<option value='2'>Đã tốt nghiệp</option>";
+                          echo "<option value='0'>Đã nghỉ học</option>";
+                        }
+                        else if($row['trang_thai'] == 2)
+                        {
+                          echo "<option value='1' selected>Đang học</option>";
+                          echo "<option value='2'>Đã tốt nghiệp</option>";
+                          echo "<option value='0'>Đã nghỉ học</option>";
                         }
                         else
                         {
-                          echo "<option value='1'>Đang làm việc</option>";
-                          echo "<option value='0' selected>Đã nghỉ việc</option>";
+                          echo "<option value='1' selected>Đang học</option>";
+                          echo "<option value='2'>Đã tốt nghiệp</option>";
+                          echo "<option value='0'>Đã nghỉ học</option>";
                         }
                       ?>
                         
@@ -551,56 +710,70 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <textarea class="form-control" name="tamTru"><?php echo $row['tam_tru']; ?></textarea>
                     </div>
                     <div class="form-group">
-                      <label>Phòng ban <span style="color: red;">*</span>: </label>
-                      <select class="form-control" name="phongBan">
-                      <option value="<?php echo $pb_id; ?>"><?php echo $ten_pb; ?></option>
+                      <label>Xuất Thân <span style="color: red;">*</span>: </label>
+                      <select class="form-control" name="xuatThan">
+                      <option value="<?php echo $xt_id; ?>"><?php echo $ten_xt; ?></option>
                       <?php 
-                        foreach ($arrPB as $pb)
-                        {
-                          echo "<option value='".$pb['id']."'>".$pb['ten_phong_ban']."</option>";
-                        }
-                      ?>
-                      </select>
-                      <small style="color: red;"><?php if(isset($error['phongBan'])){ echo "Vui lòng chọn phòng ban"; } ?></small>
-                    </div>
-                    <div class="form-group">
-                      <label>Chức vụ <span style="color: red;">*</span>: </label>
-                      <select class="form-control" name="chucVu">
-                      <option value="<?php echo $cv_id; ?>"><?php echo $ten_cv; ?></option>
-                      <?php 
-                      foreach ($arrCV as $cv)
+                      foreach ($arrXuatThan as $xt)
                       {
-                        echo "<option value='".$cv['id']."'>".$cv['ten_chuc_vu']."</option>";
+                        echo "<option value='".$xt['id']."'>".$xt['xuat_than']."</option>";
                       }
                       ?>
                       </select>
-                      <small style="color: red;"><?php if(isset($error['chucVu'])){ echo "Vui lòng chọn chức vụ"; } ?></small>
+                      <small style="color: red;"><?php if(isset($error['xuatThan'])){ echo "Vui lòng xuất thân"; } ?></small>
                     </div>
                     <div class="form-group">
-                      <label>Trình độ <span style="color: red;">*</span>: </label>
-                      <select class="form-control" name="trinhDo">
-                      <option value="<?php echo $td_id; ?>"><?php echo $ten_td; ?></option>
-                      <?php 
-                        foreach ($arrTD as $td)
-                        {
-                          echo "<option value='".$td['id']."'>".$td['ten_trinh_do']."</option>";
-                        }
-                      ?>
-                      </select>
-                      <small style="color: red;"><?php if(isset($error['trinhDo'])){ echo "Vui lòng chọn trình độ"; } ?></small>
+                      <label>Số điện thoại <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập số điện thoại" name="soDienThoai" value="<?php echo $row['so_dienthoai']; ?>">
+                      <small style="color: red;"><?php if(isset($error['soDienThoai'])){ echo "Vui lòng nhập số điện thoại"; } ?></small>
                     </div>
                     <div class="form-group">
-                      <label>Chuyên môn: </label>
-                      <select class="form-control" name="chuyenMon">
-                      <option value="<?php echo $cm_id; ?>"><?php echo $ten_cm; ?></option>
-                      <?php 
-                        foreach ($arrCM as $cm)
-                        {
-                          echo "<option value='".$cm['id']."'>".$cm['ten_chuyen_mon']."</option>";
-                        }
-                      ?>
-                      </select>
+                      <label>E-mail <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập E-mail" name="Email" value="<?php echo $row['email']; ?>">
                     </div>
+                    <div class="form-group">
+                      <label>Sở trường <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập sở trường" name="soTruong" value="<?php echo $row['so_truong']; ?>">
+                    </div>
+                    <div> <h3>Thông tin về gia đình</h3>
+                    </div>
+                    <div class="form-group">
+                      <label>Họ tên bố <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên bố" name="tenBo" value="<?php echo $row['hoten_bo']; ?>">
+                      <small style="color: red;"><?php if(isset($error['tenBo'])){ echo "Tên bố không được để trống"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Nghề nghiệp bố: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập nghề nghiệp" name="ngheBo" value="<?php echo $row['nghenghiep_bo']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Ngày sinh bố: </label>
+                      <input type="date" class="form-control" id="exampleInputEmail1" name="ngaySinhBo" value="<?php echo $row['ngaysinh_bo']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Số điện thoại bố <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập số bố" name="soBo" value="<?php echo $row['sdt_bo']; ?>">
+                      <small style="color: red;"><?php if(isset($error['soBo'])){ echo "Số bố không được để trống"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Họ tên mẹ <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên mẹ" name="tenMe" value="<?php echo $row['hoten_me']; ?>">
+                      <small style="color: red;"><?php if(isset($error['tenMe'])){ echo "Tên mẹ không được để trống"; } ?></small>
+                    </div>
+                    <div class="form-group">
+                      <label>Nghề nghiệp mẹ: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập nghề nghiệp" name="ngheMe" value="<?php echo $row['nghenghiep_me']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Ngày sinh mẹ: </label>
+                      <input type="date" class="form-control" id="exampleInputEmail1" name="ngaySinhMe" value="<?php echo $row['ngaysinh_me']; ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Số điện thoại mẹ <span style="color: red;">*</span>: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập số mẹ" name="soMe" value="<?php echo $row['sdt_me']; ?>">
+                      <small style="color: red;"><?php if(isset($error['soMe'])){ echo "Số mẹ không được để trống"; } ?></small>
+                    </div>
+                  </div>
                   </div>
                   <!-- /.col -->
                 </div>

@@ -17,7 +17,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_phong_ban, ten_phong_ban, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM phong_ban ORDER BY ngay_tao DESC";
+  $showData = "SELECT id, ma_khoa, ten_khoa, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM khoa ORDER BY ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO phong_ban(ma_phong_ban, ten_phong_ban, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$roomCode','$roomName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
+      $insert = "INSERT INTO khoa(ma_khoa, ten_khoa, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$roomCode','$roomName', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
       mysqli_query($conn, $insert);
       $success['success'] = 'Tạo khoa thành công.';
       echo '<script>setTimeout("window.location=\'khoa.php?p=staff&a=room\'",1000);</script>';
@@ -64,7 +64,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idRoom'];
-    $delete = "DELETE FROM phong_ban WHERE id = $id";
+    $delete = "DELETE FROM khoa WHERE id = $id";
     mysqli_query($conn, $delete);
     $success['success'] = 'Xóa khoa thành công.';
     echo '<script>setTimeout("window.location=\'khoa.php?p=staff&a=room\'",1000);</script>';
@@ -103,7 +103,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Khoa
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="khoa.php?p=staff&a=room">Khoa</a></li>
         <li class="active">Tạo khoa</li>
       </ol>
@@ -235,8 +235,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_phong_ban']; ?></td>
-                        <td><?php echo $arrS['ten_phong_ban']; ?></td>
+                        <td><?php echo $arrS['ma_khoa']; ?></td>
+                        <td><?php echo $arrS['ten_khoa']; ?></td>
                         <td><?php echo $arrS['ghi_chu']; ?></td>
                         <td><?php echo $arrS['nguoi_tao']; ?></td>
                         <td><?php echo $arrS['ngay_tao']; ?></td>

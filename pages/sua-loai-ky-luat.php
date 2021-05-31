@@ -63,7 +63,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Khen thưởng
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="khen-thuong.php?p=bonus-discipline&a=bonus">Khen thưởng</a></li>
         <li class="active">Khen thưởng nhân viên</li>
       </ol>

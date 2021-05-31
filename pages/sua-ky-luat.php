@@ -21,7 +21,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $rowKT = mysqli_fetch_array($resultKT);
 
     // set value active
-    $nvAC = "SELECT nv.id as idAC, ma_nv, ten_nv, lktkl.id as loai_id, ten_loai FROM khen_thuong_ky_luat ktkl, nhanvien nv, loai_khen_thuong_ky_luat lktkl WHERE nv.id = ktkl.nhanvien_id AND lktkl.id = ktkl.loai_kt_id AND  ma_kt = '$id'";
+    $nvAC = "SELECT nv.id as idAC, ma_sv, ten_sv, lktkl.id as loai_id, ten_loai FROM khen_thuong_ky_luat ktkl, sinhvien nv, loai_khen_thuong_ky_luat lktkl WHERE nv.id = ktkl.sinhvien_id AND lktkl.id = ktkl.loai_kt_id AND  ma_kt = '$id'";
     $resultNVAC = mysqli_query($conn, $nvAC);
     $rowNVAC = mysqli_fetch_array($resultNVAC);
     $idNVAC = $rowNVAC['idAC'];
@@ -36,7 +36,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     }
 
     // hien thi nhan vien
-    $nv = "SELECT id, ma_nv, ten_nv FROM nhanvien WHERE id <> $idNVAC";
+    $nv = "SELECT id, ma_sv, ten_sv FROM sinhvien WHERE id <> $idNVAC";
     $resultNV = mysqli_query($conn, $nv);
     $arrNV = array();
     while ($rowNV = mysqli_fetch_array($resultNV)) {
@@ -83,7 +83,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         $update = " UPDATE khen_thuong_ky_luat SET
                     so_qd = '$soQuyetDinh',
                     ngay_qd = '$ngayQuyetDinh',
-                    nhanvien_id = '$nhanVien',
+                    sinhvien_id = '$nhanVien',
                     ten_khen_thuong = '$tenKyLuat',
                     loai_kt_id = '$loaiKyLuat',
                     hinh_thuc = '$hinhThuc',
@@ -111,7 +111,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Kỷ luật
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ky-luat.php?p=bonus-discipline&a=discipline">Kỷ luật</a></li>
         <li class="active">Chỉnh sửa kỷ luật</li>
       </ol>
@@ -197,11 +197,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <div class="form-group">
                       <label for="exampleInputEmail1">Chọn nhân viên: </label>
                       <select class="form-control" name="nhanVien">
-                      <option value="<?php echo $rowNVAC['idAC']; ?>"><?php echo $rowNVAC['ma_nv']; ?> - <?php echo $rowNVAC['ten_nv']; ?></option>
+                      <option value="<?php echo $rowNVAC['idAC']; ?>"><?php echo $rowNVAC['ma_sv']; ?> - <?php echo $rowNVAC['ten_sv']; ?></option>
                       <?php 
                         foreach($arrNV as $nv)
                         {
-                          echo "<option value='".$nv['id']."'>".$nv['ma_nv']." - ".$nv['ten_nv']."</option>";
+                          echo "<option value='".$nv['id']."'>".$nv['ma_sv']." - ".$nv['ten_sv']."</option>";
                         }
                       ?>
                       </select>

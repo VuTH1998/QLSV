@@ -49,7 +49,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           Quản lý nhóm
         </h1>
         <ol class="breadcrumb">
-          <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+          <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
           <li class="active">Quản lý nhóm</li>
         </ol>
       </section>
@@ -110,7 +110,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           {
             $maNhom = $nh['ma_nhom'];
             // dem so luong thanh vien
-            $soLuong = "SELECT count(nhan_vien_id) as soluong FROM chi_tiet_nhom WHERE ma_nhom = '$maNhom'";
+            $soLuong = "SELECT count(sinh_vien_id) as soluong FROM chi_tiet_nhom WHERE ma_nhom = '$maNhom'";
             $resultSoLuong = mysqli_query($conn, $soLuong);
             $rowSoluong = mysqli_fetch_array($resultSoLuong);
         ?>

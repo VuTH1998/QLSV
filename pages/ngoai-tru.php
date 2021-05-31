@@ -28,7 +28,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   // }
 
   // show data
-  $NV = "SELECT id, ma_nv, ten_nv FROM nhanvien";
+  $NV = "SELECT id, ma_sinhvien,ho_sv, ten_sv FROM sinhvien";
   $resultNV = mysqli_query($conn, $NV);
   $arrNV = array();
   while ($rowNV = mysqli_fetch_array($resultNV)) {
@@ -67,7 +67,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $error['diaDiem'] = 'error';
 
     // kiem tra nhan vien co dang trong qua trinh cong tac
-    $check = "SELECT nhanvien_id FROM cong_tac WHERE nhanvien_id = '$maNhanVien'";
+    $check = "SELECT sinhvien_id FROM ngoai_tru WHERE sinhvien_id = '$maNhanVien'";
     $resultCheck = mysqli_query($conn, $check);
     if(mysqli_num_rows($resultCheck) != 0)
     {
@@ -79,7 +79,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO cong_tac(ma_cong_tac, nhanvien_id, ngay_bat_dau, ngay_ket_thuc, dia_diem, muc_dich, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua ) VALUES('$maCongTac','$maNhanVien', '$ngayBatDau', '$ngayKetThuc', '$diaDiem', '$mucDich', '$ghiChu', '$nguoiTao', '$ngayTao','$nguoiTao', '$ngayTao')";
+      $insert = "INSERT INTO ngoai_tru(ma_ngoai_tru, sinhvien_id, ngay_bat_dau, ngay_ket_thuc, dia_diem, muc_dich, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua ) VALUES('$maCongTac','$maNhanVien', '$ngayBatDau', '$ngayKetThuc', '$diaDiem', '$mucDich', '$ghiChu', '$nguoiTao', '$ngayTao','$nguoiTao', '$ngayTao')";
       echo $insert;
       $result = mysqli_query($conn, $insert);
       if($result)
@@ -100,7 +100,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Ngoại trú
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ngoai-tru.php?p=collaborate&a=add-collaborate">Ngoại trú</a></li>
         <li class="active">Thêm ngoại trú</li>
       </ol>
@@ -160,7 +160,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                         <?php 
                         foreach ($arrNV as $nv) 
                         {
-                          echo "<option value='".$nv['id']."'>". $nv['ma_nv'] ." - ".$nv['ten_nv']."</option>";
+                          echo "<option value='".$nv['id']."'>". $nv['ma_sinhvien'] ." - ".$nv['ho_sv']." ".$nv['ten_sv']."</option>";
                         }
                         ?>
                       </select>

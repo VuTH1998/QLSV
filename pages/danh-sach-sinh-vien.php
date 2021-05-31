@@ -23,7 +23,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_nv, ma_sinhvien, hinh_anh, ten_nv, gioi_tinh, ngay_tao, ngay_sinh, noi_sinh, so_cmnd, trang_thai FROM nhanvien ORDER BY id DESC";
+  $showData = "SELECT id, ma_sv, ma_sinhvien, hinh_anh, ho_sv, ten_sv, gioi_tinh, ngay_tao, ngay_sinh, noi_sinh, so_cmnd, trang_thai FROM sinhvien ORDER BY id DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -37,12 +37,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $target_dir = "../uploads/staffs/";
 
     // get image
-    $image = "SELECT hinh_anh FROM nhanvien WHERE id = $id";
+    $image = "SELECT hinh_anh FROM sinhvien WHERE id = $id";
     $resultImage = mysqli_query($conn, $image);
     $rowImage = mysqli_fetch_array($resultImage);
     $removeImage = $target_dir . $rowImage['hinh_anh'];
 
-    $delete = "DELETE FROM nhanvien WHERE id = $id";
+    $delete = "DELETE FROM sinhvien WHERE id = $id";
     $resultDel = mysqli_query($conn, $delete);
     if($resultDel)
     {
@@ -90,7 +90,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="danh-sach-sinh-vien.php?p=staff&a=list-staff">Sinh viên</a></li>
         <li class="active">Danh sách sinh viên</li>
       </ol>
@@ -190,9 +190,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Mã số hiệu sinh viên</th>
                     <th>Mã sinh viên</th>
                     <th>Ảnh</th>
+                    <th>Họ và tên đệm</th>
                     <th>Tên sinh viên</th>
                     <th>Giới tính</th>
                     <th>Ngày sinh</th>
@@ -212,10 +212,10 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_nv']; ?></td>
                         <td><?php echo $arrS['ma_sinhvien']; ?></td>
                         <td><img src="../uploads/staffs/<?php echo $arrS['hinh_anh']; ?>" width="80"></td>
-                        <td><?php echo $arrS['ten_nv']; ?></td>
+                        <td><?php echo $arrS['ho_sv']; ?></td>
+                        <td><?php echo $arrS['ten_sv']; ?></td>
                         <td>
                         <?php
                           if($arrS['gioi_tinh'] == 1)

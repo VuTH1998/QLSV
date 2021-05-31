@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $showData = "SELECT id, ma_loai_nv, ten_loai_nv, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM loai_nv WHERE id = $id";
+    $showData = "SELECT id, ma_chinh_sach, ten_chinh_sach, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM chinh_sach WHERE id = $id";
     $result = mysqli_query($conn, $showData);
     $row = mysqli_fetch_array($result);
   }
@@ -43,8 +43,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE loai_nv SET 
-                  ten_loai_nv = '$typeName',
+      $update = " UPDATE chinh_sach SET 
+                  ten_chinh_sach = '$typeName',
                   ghi_chu = '$description',
                   nguoi_sua = '$personEdit',
                   ngay_sua = '$dateEdit'
@@ -64,7 +64,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idType'];
-    $delete = "DELETE FROM loai_nv WHERE id = $id";
+    $delete = "DELETE FROM chinh_sach WHERE id = $id";
     $result = mysqli_query($conn, $delete);
     if($result)
     {
@@ -106,7 +106,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Chính sách sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="chinh-sach.php?p=staff&a=employee-type">Chính sách sinh viên</a></li>
         <li class="active">Tạo chính sách sinh viên</li>
       </ol>
@@ -175,11 +175,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mã loại: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_loai_nv']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_chinh_sach']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Tên loại: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên loại" name="typeName" value="<?php echo $row['ten_loai_nv']; ?>">
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên loại" name="typeName" value="<?php echo $row['ten_chinh_sach']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>

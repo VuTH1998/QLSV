@@ -95,7 +95,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Tài khoản
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ds-tai-khoan.php?p=account&a=list-account">Tài khoản</a></li>
         <li class="active">Danh sách tài khoản</li>
       </ol>

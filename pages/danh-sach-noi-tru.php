@@ -17,8 +17,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT ct.id as id, ma_noi_tru, ten_nv, ten_chuc_vu, ngay_bat_dau, ngay_ket_thuc, dia_diem, muc_dich FROM  nhanvien nv, chuc_vu cv, noi_tru ct WHERE nv.chuc_vu_id = cv.id AND nv.id = ct.nhanvien_id ORDER BY ct.ngay_tao DESC";
+  $showData = "SELECT ct.id as id, ma_noi_tru, ma_sinhvien, ho_sv, ten_sv, ten_chuc_vu, ngay_bat_dau, ngay_ket_thuc, dia_diem, ho_khau FROM  sinhvien nv, chuc_vu cv, noi_tru ct WHERE nv.chuc_vu_id = cv.id AND nv.id = ct.sinhvien_id ORDER BY ct.ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
+  echo("$showData");
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
     $arrShow[] = $row;
@@ -35,7 +36,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if($result)
     {
       $showMess = true;
-      $success['success'] = 'Xóa nội ngoại trú thành công.';
+      $success['success'] = 'Xóa nội trú thành công.';
       echo '<script>setTimeout("window.location=\'danh-sach-noi-tru.php?p=collaborate&a=list-collaborate\'",1000);</script>';
     }
   }
@@ -54,7 +55,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           </div>
           <div class="modal-body">
             <input type="text" name="idCongTac">
-            Bạn có thực sự muốn xóa nội ngoại trú này?
+            Bạn có thực sự muốn xóa nội trú này?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
@@ -70,12 +71,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Nội ngoại trú
+        Nội trú
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
-        <li><a href="danh-sach-noi-tru.php?p=collaborate&a=list-collaborate">Nội ngoại trú</a></li>
-        <li class="active">Danh sách nội ngoại trú</li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="danh-sach-noi-tru.php?p=collaborate&a=list-collaborate">Nội trú</a></li>
+        <li class="active">Danh sách nội trú</li>
       </ol>
     </section>
 
@@ -85,7 +86,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Danh sách nội ngoại trú</h3>
+              <h3 class="box-title">Danh sách nội trú</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -133,7 +134,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Địa điểm</th>
-                    <th>Mục đích</th>
+                    <th>Hộ khẩu</th>
                     <th>Trạng thái</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
@@ -147,13 +148,13 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_noi_tru']; ?></td>
-                        <td><?php echo $arrS['ten_nv']; ?></td>
+                        <td><?php echo $arrS['ma_sinhvien']; ?></td>
+                        <td><?php echo $arrS['ho_sv']." ".$arrS['ten_sv']; ?></td>
                         <td><?php echo $arrS['ten_chuc_vu']; ?></td>
                         <td><?php echo date_format(date_create($arrS['ngay_bat_dau']), 'd-m-Y'); ?></td>
                         <td><?php echo date_format(date_create($arrS['ngay_ket_thuc']), 'd-m-Y'); ?></td>
                         <td><?php echo $arrS['dia_diem']; ?></td>
-                        <td><?php echo html_entity_decode( $arrS['muc_dich']); ?></td>
+                        <td><?php echo html_entity_decode( $arrS['ho_khau']); ?></td>
                         <?php 
                           $ngayHienTai = date("Y-m-d H:i:s");
                           $ngayHetHan = $arrS['ngay_ket_thuc'];

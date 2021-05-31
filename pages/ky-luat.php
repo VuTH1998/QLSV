@@ -31,7 +31,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // hien thi ky luat
-  $kt = "SELECT ktkl.id as id, ma_kt, ten_khen_thuong, ten_nv, so_qd, ngay_qd, ten_loai, hinh_thuc, so_tien, ktkl.ngay_tao as ngay_tao FROM khen_thuong_ky_luat ktkl, nhanvien nv, loai_khen_thuong_ky_luat lktkl WHERE ktkl.nhanvien_id = nv.id AND ktkl.loai_kt_id = lktkl.id AND ktkl.flag = 0 ORDER BY ktkl.ngay_tao DESC";
+  $kt = "SELECT ktkl.id as id, ma_kt, ten_khen_thuong, ten_sv, so_qd, ngay_qd, ten_loai, hinh_thuc, so_tien, ktkl.ngay_tao as ngay_tao FROM khen_thuong_ky_luat ktkl, sinhvien nv, loai_khen_thuong_ky_luat lktkl WHERE ktkl.sinhvien_id = nv.id AND ktkl.loai_kt_id = lktkl.id AND ktkl.flag = 0 ORDER BY ktkl.ngay_tao DESC";
   $resultKT = mysqli_query($conn, $kt);
   $arrKT = array();
   while ($rowKT = mysqli_fetch_array($resultKT)) {
@@ -39,7 +39,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // hien thi nhan vien
-  $nv = "SELECT id, ma_nv, ten_nv FROM nhanvien ORDER BY id DESC";
+  $nv = "SELECT id, ma_sv, ten_sv FROM sinhvien ORDER BY id DESC";
   $resultNV = mysqli_query($conn, $nv);
   $arrNV = array();
   while ($rowNV = mysqli_fetch_array($resultNV)) {
@@ -119,7 +119,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO khen_thuong_ky_luat(ma_kt, so_qd, ngay_qd, nhanvien_id, ten_khen_thuong, loai_kt_id, hinh_thuc, so_tien, flag, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$maKyLuat', '$soQuyetDinh', '$ngayQuyetDinh', '$nhanVien', '$tenKyLuat', '$loaiKyLuat', '$hinhThuc', '$soTienPhat', '$flag', '$moTa', '$nguoiTao', '$ngayTao', '$nguoiTao', '$ngayTao')";
+      $insert = "INSERT INTO khen_thuong_ky_luat(ma_kt, so_qd, ngay_qd, sinhvien_id, ten_khen_thuong, loai_kt_id, hinh_thuc, so_tien, flag, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$maKyLuat', '$soQuyetDinh', '$ngayQuyetDinh', '$nhanVien', '$tenKyLuat', '$loaiKyLuat', '$hinhThuc', '$soTienPhat', '$flag', '$moTa', '$nguoiTao', '$ngayTao', '$nguoiTao', '$ngayTao')";
       $result = mysqli_query($conn, $insert);
       if($result)
       {
@@ -191,7 +191,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Kỷ luật
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ky-luat.php?p=bonus-discipline&a=discipline">Kỷ luật</a></li>
         <li class="active">Kỷ luật sinh viên</li>
       </ol>
@@ -405,7 +405,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       <?php 
                         foreach($arrNV as $nv)
                         {
-                          echo "<option value='".$nv['id']."'>".$nv['ma_nv']." - ".$nv['ten_nv']."</option>";
+                          echo "<option value='".$nv['id']."'>".$nv['ma_sv']." - ".$nv['ten_sv']."</option>";
                         }
                       ?>
                       </select>
@@ -630,7 +630,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                         <td><?php echo $count; ?></td>
                         <td><?php echo $kt['ma_kt']; ?></td>
                         <td><?php echo $kt['ten_khen_thuong']; ?></td>
-                        <td><?php echo $kt['ten_nv']; ?></td>
+                        <td><?php echo $kt['ten_sv']; ?></td>
                         <td><?php echo $kt['so_qd']; ?></td>
                         <td><?php echo date_format(date_create($kt['ngay_qd']), "d-m-Y"); ?></td>
                         <td><?php echo $kt['ten_loai']; ?></td>

@@ -11,19 +11,19 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 	include('../layouts/sidebar.php');
 
 	// dem so luong nhan vien
-	$nv = "SELECT count(id) as soluong FROM nhanvien";
+	$nv = "SELECT count(id) as soluong FROM sinhvien";
 	$resultNV = mysqli_query($conn, $nv);
 	$rowNV = mysqli_fetch_array($resultNV);
 	$tongNV = $rowNV['soluong'];
 
 	// dem so luong nhan vien nghỉ việc
-	$nghiViec = "SELECT count(id) as soluong FROM nhanvien WHERE trang_thai = 0";
+	$nghiViec = "SELECT count(id) as soluong FROM sinhvien WHERE trang_thai = 0";
 	$resultNghiViec = mysqli_query($conn, $nghiViec);
 	$rowNghiViec = mysqli_fetch_array($resultNghiViec);
 	$tongNghiViec = $rowNghiViec['soluong'];
 
 	// dem so phong ban
-	$pb = "SELECT count(id) as soluong FROM phong_ban";
+	$pb = "SELECT count(id) as soluong FROM khoa";
 	$resultPB = mysqli_query($conn, $pb);
 	$rowPB = mysqli_fetch_array($resultPB);
 	$tongPB = $rowPB['soluong'];
@@ -35,7 +35,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 	$tongTK = $rowTK['soluong'];
 
 	// danh sach phong ban
-	$phongBan = "SELECT ma_phong_ban, ten_phong_ban, ngay_tao FROM phong_ban ORDER BY id DESC";
+	$phongBan = "SELECT ma_khoa, ten_khoa, ngay_tao FROM khoa ORDER BY id DESC";
 	$resultPhongBan = mysqli_query($conn, $phongBan);
 	$arrPhongBan = array();
 	while ($rowPhongBan = mysqli_fetch_array($resultPhongBan)) 
@@ -56,7 +56,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 	$thangLuongHienTai = date_format(date_create(date("Y-m-d H:i:s")), "m/Y");
 	$thangHienTai = date_format(date_create(date("Y-m-d H:i:s")), "m");
 	$namHienTai = date_format(date_create(date("Y-m-d H:i:s")), "Y");
-	$luongThang = "SELECT ma_luong, hinh_anh, ten_nv, gioi_tinh, ngay_sinh, luong_thang, ngay_cong, khoan_nop, thuc_lanh, trang_thai from luong l, nhanvien nv WHERE l.nhanvien_id = nv.id AND year(ngay_cham) = '$namHienTai' AND month(ngay_cham) = '$thangHienTai' ORDER BY l.id DESC";
+	$luongThang = "SELECT ma_hoc_phi, hinh_anh, ten_sv, gioi_tinh, ngay_sinh, hoc_phi_ky, so_tin_chi, khoan_nop, con_no, trang_thai from hoc_phi l, sinhvien nv WHERE l.sinhvien_id = nv.id AND year(ngay_dong) = '$namHienTai' AND month(ngay_dong) = '$thangHienTai' ORDER BY l.id DESC";
 	$resultLuongThang = mysqli_query($conn, $luongThang);
 	$arrLuongThang = array();
 	while ($rowLuongThang = mysqli_fetch_array($resultLuongThang)) 
@@ -75,7 +75,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 	        <small>Đề tài khóa luận | Quản lý sinh viên tại Đại học Hùng Vương</small>
 	      </h1>
 	      <ol class="breadcrumb">
-	        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+	        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
 	        <li class="active">Thống kê</li>
 	      </ol>
 	    </section>
@@ -200,8 +200,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 		                  ?>
 		                      <tr>
 		                        <td><?php echo $count; ?></td>
-		                        <td><?php echo $pb['ma_phong_ban']; ?></td>
-		                        <td><?php echo $pb['ten_phong_ban']; ?></td>
+		                        <td><?php echo $pb['ma_khoa']; ?></td>
+		                        <td><?php echo $pb['ten_khoa']; ?></td>
 		                        <td><?php echo $pb['ngay_tao']; ?></td>
 		                      </tr>
 		                  <?php
@@ -291,10 +291,10 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 		                  ?>
 		                      <tr>
 		                        <td><?php echo $count; ?></td>
-		                        <td><?php echo $lt['ma_luong']; ?></td>
+		                        <td><?php echo $lt['ma_hoc_phi']; ?></td>
 								<td><?php echo $lt['ma_sinhvien']; ?></td>
 		                        <td><img src="../uploads/staffs/<?php echo $lt['hinh_anh']; ?>" width="80"></td>
-		                        <td><?php echo $lt['ten_nv']; ?></td>
+		                        <td><?php echo $lt['ten_sv']; ?></td>
 		                        <td>
 		                        <?php
 		                          if($lt['gioi_tinh'] == 1)
@@ -307,10 +307,10 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 		                          }
 		                        ?>
 		                        </td>
-		                        <td><?php echo number_format($lt['luong_thang']) . "vnđ"; ?></td>
-		                        <td><?php echo $lt['ngay_cong']; ?></td>
+		                        <td><?php echo number_format($lt['hoc_phi_ky']) . "vnđ"; ?></td>
+		                        <td><?php echo $lt['so_tin_chi']; ?></td>
 		                        <td><?php echo "<span style='color: red; font-weight: bold;'>" . number_format($lt['khoan_nop']) . "vnđ </span>"; ?></td>
-		                        <td><?php echo "<span style='color: blue; font-weight: bold;'>" . number_format($lt['thuc_lanh']) . "vnđ </span>"; ?></td>
+		                        <td><?php echo "<span style='color: blue; font-weight: bold;'>" . number_format($lt['con_no']) . "vnđ </span>"; ?></td>
 		                        <td>
 		                        <?php 
 		                          if($lt['trang_thai'] == 1)

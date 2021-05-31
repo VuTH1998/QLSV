@@ -40,7 +40,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
       $result = mysqli_query($conn, $insert);
       if($result)
       {
-        $success['success'] = 'Tạo nhóm nhân viên thành công.';
+        $success['success'] = 'Tạo nhóm sinh viên thành công.';
         echo '<script>setTimeout("window.location=\'tao-nhom.php?p=group&a=add-group\'",1000);</script>';
       }
     }
@@ -60,7 +60,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           </div>
           <div class="modal-body">
             <input type="hidden" name="idRoom">
-            Bạn có thực sự muốn xóa phòng ban này?
+            Bạn có thực sự muốn xóa nhóm này?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
@@ -76,12 +76,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Nhóm nhân viên
+        Nhóm sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
-        <li><a href="danh-sach-nhan-vien.php?p=staff&a=list-staff">Nhân viên</a></li>
-        <li class="active">Tạo nhóm nhân viên</li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="danh-sach-nhan-vien.php?p=staff&a=list-staff">sinh viên</a></li>
+        <li class="active">Tạo nhóm sinh viên</li>
       </ol>
     </section>
 
@@ -170,7 +170,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <!-- /.form-group -->
                     <?php 
                       if($_SESSION['level'] == 1)
-                        echo "<button type='submit' class='btn btn-primary' name='save'><i class='fa fa-plus'></i> Tạo nhóm nhân viên</button>";
+                        echo "<button type='submit' class='btn btn-primary' name='save'><i class='fa fa-plus'></i> Tạo nhóm sinh viên</button>";
                     ?>
                   </div>
                   <!-- /.col -->

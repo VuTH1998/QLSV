@@ -104,7 +104,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Chức vụ
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="chuc-vu.php?p=staff&a=position">Chức vụ</a></li>
         <li class="active">Thêm chức vụ</li>
       </ol>
@@ -181,7 +181,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Phí tín chỉ: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập lương/ngày" name="salary">
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập phí/tín" name="salary">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>

@@ -18,7 +18,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_POST['chiTietLuong']))
   {
     $maNhanVien = $_POST['maNhanVien'];
-    echo "<script>location.href='chi-tiet-luong.php?p=salary&a=salary&id=".$maNhanVien."'</script>";
+    echo "<script>location.href='chi-tiet-hoc-phi.php?p=salary&a=salary&id=".$maNhanVien."'</script>";
   }
 
   if(isset($_POST['tinhLuong']))
@@ -28,18 +28,20 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT ma_luong, hinh_anh, nv.id as idNhanVien, ten_nv, ten_chuc_vu, luong_thang, ngay_cong, phu_cap, khoan_nop, tam_ung, thuc_lanh, ngay_cham FROM luong l, nhanvien nv, chuc_vu cv WHERE nv.id = l.nhanvien_id AND nv.chuc_vu_id = cv.id ORDER BY l.id DESC";
+  $showData = "SELECT ma_hoc_phi, hinh_anh, nv.id as idNhanVien,ho_sv, ten_sv, ten_chuc_vu, hoc_phi_ky, so_tin_chi, da_nop, con_no, ngay_dong FROM hoc_phi l, sinhvien nv, chuc_vu cv WHERE nv.id = l.sinhvien_id AND nv.chuc_vu_id = cv.id ORDER BY l.id DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
     $arrShow[] = $row;
   }
+  // echo $showData;
+  // die;
 
   // xoa record luong
   if(isset($_POST['delete']))
   {
     $maLuong = $_POST['maLuong'];
-    $xoaLuong = "DELETE FROM luong WHERE ma_luong = '$maLuong'";
+    $xoaLuong = "DELETE FROM hoc_phi WHERE ma_hoc_phi = '$maLuong'";
     $resultXoaLuong = mysqli_query($conn, $xoaLuong);
     if($resultXoaLuong)
     {
@@ -83,7 +85,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
        Tính học phí sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="bang-hoc-phi.php?p=salary&a=salary">Bảng học phí</a></li>
         <li class="active">Tính học phí sinh viên</li>
       </ol>
@@ -203,15 +205,15 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_luong']; ?></td>
-                        <td><?php echo $arrS['ten_nv']; ?></td>
+                        <td><?php echo $arrS['ma_hoc_phi']; ?></td>
+                        <td><?php echo $arrS['ho_sv']." ".$arrS['ten_sv']; ?></td>
                         <td><?php echo $arrS['ten_chuc_vu']; ?></td>
-                        <td><?php echo number_format($arrS['luong_thang'])."vnđ"; ?></td>
-                        <td class="text-center"><?php echo $arrS['ngay_cong']; ?></td>
-                        <td><?php echo number_format($arrS['tam_ung'])."vnđ"; ?></td>
-                        <td style="color: blue; font-weight: bold;"><?php echo number_format($arrS['thuc_lanh'])."vnđ"; ?></td>
+                        <td><?php echo number_format($arrS['hoc_phi_ky'])."vnđ"; ?></td>
+                        <td class="text-center"><?php echo $arrS['so_tin_chi']; ?></td>
+                        <td><?php echo number_format($arrS['da_nop'])."vnđ"; ?></td>
+                        <td style="color: blue; font-weight: bold;"><?php echo number_format($arrS['con_no'])."vnđ"; ?></td>
                         <td class="text-center">
-                        <?php echo date_format(date_create($arrS['ngay_cham']), "d-m-Y"); ?>
+                        <?php echo date_format(date_create($arrS['ngay_dong']), "d-m-Y"); ?>
                         </td>
                         <td>
                           <?php 
@@ -233,7 +235,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                           <?php 
                             if($row_acc['quyen'] == 1)
                             {
-                              echo "<button type='button' class='btn bg-maroon btn-flat' data-toggle='modal' data-target='#exampleModal' data-whatever='".$arrS['ma_luong']."'><i class='fa fa-trash'></i></button>";
+                              echo "<button type='button' class='btn bg-maroon btn-flat' data-toggle='modal' data-target='#exampleModal' data-whatever='".$arrS['ma_hoc_phi']."'><i class='fa fa-trash'></i></button>";
                             }
                             else
                             {

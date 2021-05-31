@@ -58,8 +58,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="<?php if($a == 'statistic') echo 'active'; ?>"><a href="index.php?p=index&a=statistic"><i class="fa fa-circle-o"></i> Thống kê</a></li>
-            <li class="<?php if($a == 'nhanvien') echo 'active'; ?>"><a a href="ds-sinhvien.php?p=index&a=nhanvien"><i class="fa fa-circle-o"></i> Danh sách sinh viên</a></li>
+            <li class="<?php if($a == 'statistic') echo 'active'; ?>"><a href="index.php><i class="fa fa-circle-o"></i> Thống kê</a></li>
+            <li class="<?php if($a == 'sinhvien') echo 'active'; ?>"><a a href="ds-sinhvien.php?p=index&a=sinhvien"><i class="fa fa-circle-o"></i> Danh sách sinh viên</a></li>
             <li class="<?php if(($p == 'index') && ($a == 'taikhoan')) echo 'active'; ?>"><a href="index_taikhoan.php?p=index&a=taikhoan"><i class="fa fa-circle-o"></i> Danh sách tài khoản</a></li>
           </ul>
         </li>
@@ -75,17 +75,18 @@
             <li class="<?php if(($p == 'staff') && ($a == 'room')) echo 'active'; ?>"><a href="khoa.php?p=staff&a=room"><i class="fa fa-circle-o"></i> Khoa</a></li>
             <li class="<?php if(($p == 'staff') && ($a == 'position')) echo 'active'; ?>"><a href="chuc-vu.php?p=staff&a=position"><i class="fa fa-circle-o"></i> Chức vụ</a></li>
             <li class="<?php if(($p == 'staff') && ($a == 'level')) echo 'active'; ?>"><a href="sinh-vien-nam.php?p=staff&a=level"><i class="fa fa-circle-o"></i> Năm</a></li>
-            <li class="<?php if(($p == 'staff') && ($a == 'specialize')) echo 'active'; ?>"><a href="lop.php?p=staff&a=specialize"><i class="fa fa-circle-o"></i> Lớp</a></li>
+            <li class="<?php if(($p == 'staff') && ($a == 'specialize')) echo 'active'; ?>"><a href="lop.php?p=staff&a=specialize"><i class="fa fa-circle-o"></i> Ngành học</a></li>
             <li class="<?php if(($p == 'staff') && ($a == 'certificate')) echo 'active'; ?>"><a href="noi-tot-nghiep.php?p=staff&a=certificate"><i class="fa fa-circle-o"></i> Tốt nghiệp</a></li>
             <li class="<?php if(($p == 'staff') && ($a == 'employee-type')) echo 'active'; ?>"><a href="chinh-sach.php?p=staff&a=employee-type"><i class="fa fa-circle-o"></i> Chính sách sinh viên</a></li>
             <li class="<?php if(($p == 'staff') && ($a == 'add-staff')) echo 'active'; ?>"><a href="them-sinh-vien.php?p=staff&a=add-staff"><i class="fa fa-circle-o"></i> Thêm mới sinh viên</a></li>
             <li class="<?php if(($p == 'staff') && ($a =='list-staff')) echo 'active'; ?>"><a href="danh-sach-sinh-vien.php?p=staff&a=list-staff"><i class="fa fa-circle-o"></i> Danh sách sinh viên</a></li>
+            <li class="<?php if(($p == 'staff') && ($a =='list-staff2')) echo 'active'; ?>"><a href="timkiem.php?p=staff&a=list-staff"><i class="fa fa-circle-o"></i>Lọc</a></li>
           </ul>
         </li>
         <li class="<?php if($p == 'salary') echo 'active'; ?> treeview">
           <a href="#">
             <i class="fa fa-money"></i>
-            <span>Quản lý học phí</span>
+            <span>Quản lý học phí</span>  
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -93,6 +94,33 @@
           <ul class="treeview-menu">
             <li class="<?php if(($p == 'salary') && ($a =='salary')) echo 'active'; ?>"><a href="bang-hoc-phi.php?p=salary&a=salary"><i class="fa fa-circle-o"></i> Bảng tính học phí</a></li>
             <li class="<?php if(($p == 'salary') && ($a =='calculator')) echo 'active'; ?>"><a href="tinh-hoc-phi.php?p=salary&a=calculator"><i class="fa fa-circle-o"></i> Tính học phí</a></li>
+          </ul>
+        </li>
+        <li class="<?php if($p == 'salary') echo 'active'; ?> treeview">
+          <a href="#">
+            <i class="fa fa-money"></i>
+            <span>Quản lý học tập</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if(($p == 'salary') && ($a =='salary')) echo 'active'; ?>"><a href="mon_hoc.php?p=salary&a=salary"><i class="fa fa-circle-o"></i> Bảng môn học</a></li>
+            <li class="<?php if(($p == 'salary') && ($a =='calculator')) echo 'active'; ?>"><a href="tinh-hoc-phi.php?p=salary&a=calculator"><i class="fa fa-circle-o"></i> Bảng điểm danh</a></li>
+          </ul>
+        </li>
+        <li class="<?php if($p == 'salary') echo 'active'; ?> treeview">
+          <a href="#">
+          <i class="fa fa-star"></i>
+            <span>Quản lý điểm</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if(($p == 'salary') && ($a =='salary')) echo 'active'; ?>"><a href="tinhdiem.php?p=salary&a=salary"><i class="fa fa-circle-o"></i>Tính điểm rèn luyện</a></li>
+            <li class="<?php if(($p == 'salary') && ($a =='calculator')) echo 'active'; ?>"><a href="bang-diem-ren-luyen.php?p=salary&a=calculator"><i class="fa fa-circle-o"></i> Bảng điểm rèn luyện</a></li>
+            <li class="<?php if(($p == 'salary') && ($a =='calculator2')) echo 'active'; ?>"><a href="xem-diem.php?p=salary&a=calculator2"><i class="fa fa-circle-o"></i> Tra cứu hệ thống</a></li>
           </ul>
         </li>
         <li class="<?php if($p == 'collaborate') echo 'active'; ?> treeview">

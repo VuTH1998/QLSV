@@ -17,7 +17,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_chuyen_mon, ten_chuyen_mon, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM chuyen_mon ORDER BY ngay_tao DESC";
+  $showData = "SELECT id, ma_lop, ten_lop, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM lop ORDER BY ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -45,14 +45,14 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
 
     // validate
     if(empty($titleSpecial))
-      $error['titleSpecial'] = 'Vui lòng nhập <b> tên lớp </b>';
+      $error['titleSpecial'] = 'Vui lòng nhập <b> tên ngành học </b>';
 
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO chuyen_mon(ma_chuyen_mon, ten_chuyen_mon, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$specialCode','$titleSpecial', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
+      $insert = "INSERT INTO lop(ma_lop, ten_lop, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$specialCode','$titleSpecial', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
       mysqli_query($conn, $insert);
-      $success['success'] = 'Thêm lớp thành công';
+      $success['success'] = 'Thêm ngành học thành công';
       echo '<script>setTimeout("window.location=\'lop.php?p=staff&a=specialize\'",1000);</script>';
     }
 
@@ -64,9 +64,9 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idSpecial'];
-    $delete = "DELETE FROM chuyen_mon WHERE id = $id";
+    $delete = "DELETE FROM lop WHERE id = $id";
     mysqli_query($conn, $delete);
-    $success['success'] = 'Xóa lớp thành công.';
+    $success['success'] = 'Xóa ngành học thành công.';
     echo '<script>setTimeout("window.location=\'lop.php?p=staff&a=specialize\'",1000);</script>';
   }
 
@@ -84,7 +84,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           </div>
           <div class="modal-body">
             <input type="hidden" name="idSpecial">
-            Bạn có thực sự muốn xóa lớp này?
+            Bạn có thực sự muốn xóa ngành học này?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
@@ -100,12 +100,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Lớp
+        Ngành học
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
-        <li><a href="lop.php?p=staff&a=specialize">Lớp</a></li>
-        <li class="active">Thêm lớp</li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="lop.php?p=staff&a=specialize">Ngành học</a></li>
+        <li class="active">Thêm ngành học</li>
       </ol>
     </section>
 
@@ -115,7 +115,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Thêm lớp</h3>
+              <h3 class="box-title">Thêm ngành học</h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -171,12 +171,12 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Mã lớp: </label>
+                      <label for="exampleInputEmail1">Mã ngành học: </label>
                       <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $specialCode; ?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Tên lớp: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên lớp" name="titleSpecial">
+                      <label for="exampleInputEmail1">Tên ngành học: </label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên ngành học" name="titleSpecial">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>
@@ -194,7 +194,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <!-- /.form-group -->
                     <?php 
                       if($_SESSION['level'] == 1)
-                        echo "<button type='submit' class='btn btn-primary' name='save'><i class='fa fa-plus'></i> Thêm lớp</button>";
+                        echo "<button type='submit' class='btn btn-primary' name='save'><i class='fa fa-plus'></i> Thêm ngành học</button>";
                     ?>
                   </div>
                   <!-- /.col -->
@@ -207,7 +207,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
           <!-- /.box -->
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Danh sách lớp</h3>
+              <h3 class="box-title">Danh sách ngành học</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -216,8 +216,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Mã lớp</th>
-                    <th>Tên lớp</th>
+                    <th>Mã ngành học</th>
+                    <th>Tên ngành học</th>
                     <th>Mô tả</th>
                     <th>Người tạo</th>
                     <th>Ngày tạo</th>
@@ -235,8 +235,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_chuyen_mon']; ?></td>
-                        <td><?php echo $arrS['ten_chuyen_mon']; ?></td>
+                        <td><?php echo $arrS['ma_lop']; ?></td>
+                        <td><?php echo $arrS['ten_lop']; ?></td>
                         <td><?php echo $arrS['ghi_chu']; ?></td>
                         <td><?php echo $arrS['nguoi_tao']; ?></td>
                         <td><?php echo $arrS['ngay_tao']; ?></td>

@@ -15,7 +15,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $showData = "SELECT id, ma_bang_cap, ten_bang_cap, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM bang_cap WHERE id = $id";
+    $showData = "SELECT id, ma_tot_nghiep, ten_noi_tot_nghiep, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM noi_tot_nghiep WHERE id = $id";
     $result = mysqli_query($conn, $showData);
     $row = mysqli_fetch_array($result);
   }
@@ -44,8 +44,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE bang_cap SET 
-                  ten_bang_cap = '$certificateName',
+      $update = " UPDATE noi_tot_nghiep SET 
+                  ten_noi_tot_nghiep = '$certificateName',
                   ghi_chu = '$description',
                   nguoi_sua = '$personEdit',
                   ngay_sua = '$dateEdit'
@@ -68,7 +68,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Bằng cấp
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="noi-tot-nghiep.php?p=staff&a=certificate">Bằng cấp</a></li>
         <li class="active">Chỉnh sửa bằng cấp</li>
       </ol>
@@ -137,11 +137,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mã bằng cấp: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_bang_cap']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="speacialCode" value="<?php echo $row['ma_tot_nghiep']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Tên bằng cấp: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên bằng cấp" name="certificateName" value="<?php echo $row['ten_bang_cap']; ?>">
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên bằng cấp" name="certificateName" value="<?php echo $row['ten_noi_tot_nghiep']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>

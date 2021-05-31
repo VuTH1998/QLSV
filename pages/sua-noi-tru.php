@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $act = "SELECT ma_noi_tru, nv.id as idNhanVien, ma_nv, ten_nv, ngay_bat_dau, ngay_ket_thuc, dia_diem, muc_dich, ghi_chu FROM noi_tru ct, nhanvien nv WHERE ct.nhanvien_id = nv.id AND ct.id = $id";
+    $act = "SELECT ma_noi_tru, nv.id as idNhanVien, ma_sv, ten_sv, ngay_bat_dau, ngay_ket_thuc, dia_diem, ho_khau, ghi_chu FROM noi_tru ct, sinhvien nv WHERE ct.sinhvien_id = nv.id AND ct.id = $id";
     $resultAct = mysqli_query($conn, $act);
     $rowAct = mysqli_fetch_array($resultAct);
     $idNhanVien = $rowAct['idNhanVien'];
@@ -66,6 +66,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   WHERE id = $id";
 
       $result = mysqli_query($conn, $update);
+    
       if($result)
       {
         $success['success'] = 'Lưu lại thành công';
@@ -84,7 +85,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Nội trú
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="noi-tru.php?p=collaborate&a=add-collaborate">Nội trú</a></li>
         <li class="active">Thêm nội trú</li>
       </ol>
@@ -139,7 +140,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Sinh viên: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $rowAct['ma_nv']; ?> - <?php echo $rowAct['ten_nv']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $rowAct['ma_sv']; ?> - <?php echo $rowAct['ten_sv']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Ngày bắt đầu<span style="color: red;">*</span>: </label>
@@ -158,7 +159,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Hộ khẩu thường trú: </label>
-                      <textarea id="editor1" rows="10" cols="80" name="mucDich"><?php echo $rowAct['muc_dich']; ?>
+                      <textarea id="editor1" rows="10" cols="80" name="mucDich"><?php echo $rowAct['ho_khau']; ?>
                       </textarea>
                     </div>
                     <div class="form-group">

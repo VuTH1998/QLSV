@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   if(isset($_GET['id']))
   {
     $id = $_GET['id'];
-    $act = "SELECT ma_cong_tac, nv.id as idNhanVien, ma_nv, ten_nv, ngay_bat_dau, ngay_ket_thuc, dia_diem, muc_dich, ghi_chu FROM cong_tac ct, nhanvien nv WHERE ct.nhanvien_id = nv.id AND ct.id = $id";
+    $act = "SELECT ma_ngoai_tru, nv.id as idNhanVien, ma_sv,ten_sv, ngay_bat_dau, ngay_ket_thuc, dia_diem, ho_khau, ghi_chu FROM ngoai_tru ct, sinhvien nv WHERE ct.sinhvien_id = nv.id AND ct.id = $id";
     $resultAct = mysqli_query($conn, $act);
     $rowAct = mysqli_fetch_array($resultAct);
     $idNhanVien = $rowAct['idNhanVien'];
@@ -55,7 +55,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE cong_tac SET
+      $update = " UPDATE ngoai_tru SET
                   ngay_bat_dau = '$ngayBatDau',
                   ngay_ket_thuc = '$ngayKetThuc',
                   dia_diem = '$diaDiem',
@@ -84,7 +84,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Ngoại trú
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ngoai-tru.php?p=collaborate&a=add-collaborate">Ngoại trú</a></li>
         <li class="active">Thêm ngoại trú</li>
       </ol>
@@ -135,11 +135,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mã ngoại trú: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="maCongTac" value="<?php echo $rowAct['ma_cong_tac']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="maCongTac" value="<?php echo $rowAct['ma_ngoai_tru']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Sinh viên: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $rowAct['ma_nv']; ?> - <?php echo $rowAct['ten_nv']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="maNhanVien" value="<?php echo $rowAct['ma_sv']; ?> - <?php echo $rowAct['ten_sv']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Ngày bắt đầu<span style="color: red;">*</span>: </label>
@@ -158,7 +158,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Hộ Khẩu thường trú: </label>
-                      <textarea id="editor1" rows="10" cols="80" name="mucDich"><?php echo $rowAct['muc_dich']; ?>
+                      <textarea id="editor1" rows="10" cols="80" name="mucDich"><?php echo $rowAct['ho_khau']; ?>
                       </textarea>
                     </div>
                     <div class="form-group">

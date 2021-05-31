@@ -17,7 +17,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   }
 
   // show data
-  $showData = "SELECT id, ma_trinh_do, ten_trinh_do, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM trinh_do ORDER BY ngay_tao DESC";
+  $showData = "SELECT id, ma_nam_sinh_vien, ten_nam_sinh_vien, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM nam_sinh_vien ORDER BY ngay_tao DESC";
   $result = mysqli_query($conn, $showData);
   $arrShow = array();
   while ($row = mysqli_fetch_array($result)) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $insert = "INSERT INTO trinh_do(ma_trinh_do, ten_trinh_do, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$levelCode','$titleLevel', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
+      $insert = "INSERT INTO nam_sinh_vien(ma_nam_sinh_vien, ten_nam_sinh_vien, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua) VALUES('$levelCode','$titleLevel', '$description', '$personCreate', '$dateCreate', '$personEdit', '$dateEdit')";
       mysqli_query($conn, $insert);
       $success['success'] = 'Thêm sinh viên năm thành công';
       echo '<script>setTimeout("window.location=\'sinh-vien-nam.php?p=staff&a=level\'",1000);</script>';
@@ -64,7 +64,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     $showMess = true;
 
     $id = $_POST['idLevel'];
-    $delete = "DELETE FROM trinh_do WHERE id = $id";
+    $delete = "DELETE FROM nam_sinh_vien WHERE id = $id";
     mysqli_query($conn, $delete);
     $success['success'] = 'Xóa sinh viên năm thành công.';
     echo '<script>setTimeout("window.location=\'sinh-vien-nam.php?p=staff&a=level\'",1000);</script>';
@@ -103,7 +103,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Sinh viên năm 
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="sinh-vien-nam.php?p=staff&a=level">Sinh viên năm</a></li>
         <li class="active">Thêm sinh viên năm</li>
       </ol>
@@ -235,8 +235,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $arrS['ma_trinh_do']; ?></td>
-                        <td><?php echo $arrS['ten_trinh_do']; ?></td>
+                        <td><?php echo $arrS['ma_nam_sinh_vien']; ?></td>
+                        <td><?php echo $arrS['ten_nam_sinh_vien']; ?></td>
                         <td><?php echo $arrS['ghi_chu']; ?></td>
                         <td><?php echo $arrS['nguoi_tao']; ?></td>
                         <td><?php echo $arrS['ngay_tao']; ?></td>

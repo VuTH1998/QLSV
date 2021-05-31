@@ -15,11 +15,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   {
     $id = $_GET['id'];
 
-    $showData = "SELECT nv.id as id, ma_nv, hinh_anh, ten_nv, biet_danh, gioi_tinh, nv.ngay_tao as ngay_tao, ngay_sinh, noi_sinh, so_cmnd, ten_tinh_trang, ngay_cap_cmnd, noi_cap_cmnd, nguyen_quan, ten_quoc_tich, ten_dan_toc, ten_ton_giao, ho_khau, tam_tru, ten_loai_nv, ten_trinh_do, ten_chuyen_mon, ten_bang_cap, ten_phong_ban, ten_chuc_vu, trang_thai FROM nhanvien nv, quoc_tich qt, dan_toc dt, ton_giao tg, loai_nv lnv, trinh_do td, chuyen_mon cm, bang_cap bc, phong_ban pb, chuc_vu cv, tinh_trang_hon_nhan hn WHERE nv.quoc_tich_id = qt.id AND nv.dan_toc_id = dt.id AND nv.ton_giao_id = tg.id AND nv.loai_nv_id = lnv.id AND nv.trinh_do_id = td.id AND nv.chuyen_mon_id = cm.id AND nv.bang_cap_id = bc.id AND nv.phong_ban_id = pb.id AND nv.chuc_vu_id = cv.id AND nv.hon_nhan_id = hn.id AND nv.id = $id";
+    $showData = "SELECT nv.id as id, ma_sv, hinh_anh, ten_sv, biet_danh, gioi_tinh, nv.ngay_tao as ngay_tao, ngay_sinh, noi_sinh, so_cmnd, ten_tinh_trang, ngay_cap_cmnd, noi_cap_cmnd, nguyen_quan, ten_quoc_tich, ten_dan_toc, ten_ton_giao, ho_khau, tam_tru, ten_chinh_sach, ten_nam_sinh_vien, ten_lop, ten_noi_tot_nghiep, ten_khoa, ten_chuc_vu, trang_thai FROM sinhvien nv, quoc_tich qt, dan_toc dt, ton_giao tg, chinh_sach lnv, nam_sinh_vien td, lop cm, noi_tot_nghiep bc, khoa pb, chuc_vu cv, tinh_trang_hon_nhan hn WHERE nv.quoc_tich_id = qt.id AND nv.dan_toc_id = dt.id AND nv.ton_giao_id = tg.id AND nv.chinh_sach_id = lnv.id AND nv.nam_sinh_vien_id = td.id AND nv.lop_id = cm.id AND nv.noi_tot_nghiep_id = bc.id AND nv.khoa_id = pb.id AND nv.chuc_vu_id = cv.id AND nv.hon_nhan_id = hn.id AND nv.id = $id";
     $result = mysqli_query($conn, $showData);
     $row = mysqli_fetch_array($result);
 
-    $luong = "SELECT nv.id as idNhanVien, ma_luong, ma_nv, ten_nv, ten_chuc_vu, luong_ngay, luong_thang, ngay_cong, phu_cap, thuc_lanh, khoan_nop, tam_ung, ngay_cham FROM luong l, nhanvien nv, chuc_vu cv WHERE l.nhanvien_id = nv.id AND nv.chuc_vu_id = cv.id AND nv.id = $id";
+    $luong = "SELECT nv.id as idNhanVien, ma_hoc_phi, ma_sv, ten_sv, ten_chuc_vu, luong_ngay, hoc_phi_ky, so_tin_chi, phu_cap, con_no, khoan_nop, da_nop, ngay_dong FROM hoc_phi l, sinhvien nv, chuc_vu cv WHERE l.sinhvien_id = nv.id AND nv.chuc_vu_id = cv.id AND nv.id = $id";
     $resultLuong = mysqli_query($conn, $luong);
     $arrLuong = array();
     while ($rowLuong = mysqli_fetch_array($resultLuong)) 
@@ -38,7 +38,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Thông tin sinh viên
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="danh-sach-nhan-vien.php?p=staff&a=list-staff">Danh sách sinh viên</a></li>
         <li class="active">Thông tin sinh viên</li>
       </ol>
@@ -50,7 +50,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         <div class="col-xs-12">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Mã sinh viên: <?php echo $row['ma_nv']; ?></h3>
+              <h3 class="box-title">Mã sinh viên: <?php echo $row['ma_sv']; ?></h3>
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -63,7 +63,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <img src="../uploads/staffs/<?php echo $row['hinh_anh']; ?>" width="100%">
                 </div>
                 <div class="col-lg-5 col-sm-5 col-md-6 col-xs-12">
-                  <p class="box-title">Tên sinh viên: <b><?php echo $row['ten_nv']; ?></b></p>
+                  <p class="box-title">Tên sinh viên: <b><?php echo $row['ten_sv']; ?></b></p>
                   <p class="box-title">Biệt danh: 
                     <?php if($row['biet_danh'] == ""){ echo "Không có"; } else { echo $row['biet_danh']; } ?>
                   </p>
@@ -110,19 +110,19 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                     <?php echo $row['tam_tru']; ?>
                   </p>
                   <p class="box-title">Chính sách sinh viên: 
-                    <b><?php echo $row['ten_loai_nv']; ?></b>
+                    <b><?php echo $row['ten_chinh_sach']; ?></b>
                   </p>
                   <p class="box-title">Năm sinh viên: 
-                    <b><?php echo $row['ten_trinh_do']; ?></b>
+                    <b><?php echo $row['nam_sinh_vien']; ?></b>
                   </p>
                   <p class="box-title">Lớp: 
-                    <b><?php echo $row['ten_chuyen_mon']; ?></b>
+                    <b><?php echo $row['ten_lop']; ?></b>
                   </p>
                   <p class="box-title">Tốt nghiệp THPT: 
-                    <b><?php echo $row['ten_bang_cap']; ?></b>
+                    <b><?php echo $row['ten_noi_tot_nghiep']; ?></b>
                   </p>
                   <p class="box-title">Khoa: 
-                    <b><?php echo $row['ten_phong_ban']; ?></b>
+                    <b><?php echo $row['ten_khoa']; ?></b>
                   </p>
                   <p class="box-title">Chức vụ: 
                     <b><?php echo $row['ten_chuc_vu']; ?></b>
@@ -189,16 +189,16 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   ?>
                       <tr>
                         <td><?php echo $count; ?></td>
-                        <td><?php echo $luong['ma_luong']; ?></td>
+                        <td><?php echo $luong['ma_hoc_phi']; ?></td>
                         <td><?php echo number_format($luong['luong_ngay'])."vnđ"; ?></td>
-                        <td><?php echo $luong['ngay_cong']; ?></td>
-                        <td><?php echo number_format($luong['luong_thang'])."vnđ"; ?></td>
+                        <td><?php echo $luong['so_tin_chi']; ?></td>
+                        <td><?php echo number_format($luong['hoc_phi_ky'])."vnđ"; ?></td>
                         <td><?php echo number_format($luong['phu_cap'])."vnđ"; ?></td>
                         <td style="color: red; font-weight: bold;"><?php echo number_format($luong['khoan_nop'])."vnđ"; ?></td>
-                        <td><?php echo number_format($luong['tam_ung'])."vnđ"; ?></td>
-                        <td style="color: blue; font-weight: bold;"><?php echo number_format($luong['thuc_lanh'])."vnđ"; ?></td>
+                        <td><?php echo number_format($luong['da_nop'])."vnđ"; ?></td>
+                        <td style="color: blue; font-weight: bold;"><?php echo number_format($luong['con_no'])."vnđ"; ?></td>
                         <td class="text-center">
-                        <?php echo date_format(date_create($luong['ngay_cham']), "d-m-Y"); ?>
+                        <?php echo date_format(date_create($luong['ngay_dong']), "d-m-Y"); ?>
                         </td>
                       </tr>
                   <?php

@@ -131,7 +131,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Tài khoản
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="ds-tai-khoan.php?p=account&a=list-account">Tài khoản</a></li>
         <li class="active">Chỉnh sửa tài khoản</li>
       </ol>
@@ -230,7 +230,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       echo "<label>";
 
                       echo "<lable>";
-                      echo "<input type='radio' name='level' class='minimal' value='0'> Nhân viên";
+                      echo "<input type='radio' name='level' class='minimal' value='0'> Sinh viên";
                       echo "</lable>";
                     }
                     else
@@ -241,7 +241,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                       echo "<label>";
 
                       echo "<lable>";
-                      echo "<input type='radio' name='level' class='minimal' value='0' checked> Nhân viên";
+                      echo "<input type='radio' name='level' class='minimal' value='0' checked> Sinh viên";
                       echo "</lable>";
                     }
                   ?>

@@ -14,7 +14,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
   {
     $id = $_GET['id'];
     // show data
-    $showData = "SELECT id, ma_trinh_do, ten_trinh_do, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM trinh_do WHERE id = $id ORDER BY ngay_tao DESC";
+    $showData = "SELECT id, ma_nam_sinh_vien, ten_nam_sinh_vien, ghi_chu, nguoi_tao, ngay_tao, nguoi_sua, ngay_sua FROM nam_sinh_vien WHERE id = $id ORDER BY ngay_tao DESC";
     $result = mysqli_query($conn, $showData);
     $arrShow = array();
     $row = mysqli_fetch_array($result);
@@ -41,8 +41,8 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
     if(!$error)
     {
       $showMess = true;
-      $update = " UPDATE trinh_do SET 
-                  ten_trinh_do = '$titleLevel',
+      $update = " UPDATE nam_sinh_vien SET 
+                  ten_nam_sinh_vien = '$titleLevel',
                   ghi_chu = '$description',
                   nguoi_sua = '$personEdit',
                   ngay_sua = '$dateEdit'
@@ -63,7 +63,7 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
         Trình độ
       </h1>
       <ol class="breadcrumb">
-        <li><a href="index.php?p=index&a=statistic"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Tổng quan</a></li>
         <li><a href="sinh-vien-nam.php?p=staff&a=level">Trình độ</a></li>
         <li class="active">Chỉnh sửa trình độ</li>
       </ol>
@@ -132,11 +132,11 @@ if(isset($_SESSION['username']) && isset($_SESSION['level']))
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mã trình độ: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="positionCode" value="<?php echo $row['ma_trinh_do']; ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="positionCode" value="<?php echo $row['ma_nam_sinh_vien']; ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Tên trình độ: </label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên trình độ" name="titleLevel" value="<?php echo $row['ten_trinh_do']; ?>">
+                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nhập tên trình độ" name="titleLevel" value="<?php echo $row['ten_nam_sinh_vien']; ?>">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Mô tả: </label>
